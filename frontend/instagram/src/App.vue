@@ -35,7 +35,7 @@
       <v-btn v-if="isLogin" @click="logout" outlined>Log Out</v-btn>
     </v-app-bar>
 
-    <v-main>
+    <v-main class="bg">
       <router-view />
     </v-main>
   </v-app>
@@ -56,3 +56,11 @@ export default class App extends Vue {
   @Getter(AuthGetters.isLogin) private isLogin!: () => boolean;
 }
 </script>
+<style lang="scss">
+  .bg {
+    background-image: url("assets/cat-background.jpg");
+    // background: green;
+    background-repeat: no-repeat;
+    background-size:cover
+  }
+</style>
