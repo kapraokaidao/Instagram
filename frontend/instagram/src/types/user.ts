@@ -5,11 +5,6 @@ export interface User {
   bio: string;
 }
 
-// export enum UserGender {
-//   Male = "male",
-//   Female = "female"
-// }
-
 export interface UserState {
   isFetching: boolean;
   isSuccess: boolean;
@@ -19,9 +14,6 @@ export interface UserState {
 
 export enum UserGetters {
   getUser = "getUser"
-  //   getOtherUser = "getOtherUser",
-  //   getUserById = "getUserById",
-  //   getFetching = "getFetching"
 }
 
 export enum UserMutations {

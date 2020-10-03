@@ -1,5 +1,3 @@
-// import { cloneDeep } from "lodash";
-// import { baseState, baseMutations } from "../state";
 import {
   UserState,
   UserGetters,
@@ -8,7 +6,6 @@ import {
 } from "@/types/user";
 import { User } from "@/types/user";
 import { StoreOptions } from "vuex";
-// import router from "../../router";
 import axios from "axios";
 import { AuthMutations } from "@/types/auth";
 
@@ -31,7 +28,7 @@ const store: StoreOptions<UserState> = {
     [UserActions.fetchUser]: async ({ commit, getters }) => {
       if (getters.getUser) {
         try {
-          // Patch /user/:id/updateProfile
+          // Get /user
           const response = await axios.get("/user");
           const responseData: User = response.data;
           commit(UserMutations.setUser, responseData);
