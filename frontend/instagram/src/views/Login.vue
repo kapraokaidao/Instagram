@@ -1,11 +1,15 @@
 <template>
-  <div>
-    <v-card class="card-style-login">
+  <div class="flex-container">
+    <div class="card-style-login">
       <form class="form-style-login">
-        <div class="header">
-          <h2>Instagram</h2>
+        <div class="img-container">
+          <v-img max-height="100" max-width="100" src="../assets/logo.png" />
         </div>
+        <h2 class="header">
+          Instagram
+        </h2>
         <v-text-field
+          class="text-field"
           v-model="username"
           :error-messages="usernameError"
           label="Username"
@@ -14,6 +18,7 @@
           @blur="$v.username.$touch()"
         ></v-text-field>
         <v-text-field
+          class="text-field"
           v-model="password"
           :error-messages="passwordError"
           label="Password"
@@ -21,27 +26,21 @@
           @input="$v.password.$touch()"
           @blur="$v.password.$touch()"
         ></v-text-field>
-        <div>
-          <v-row>
-            <v-btn
-              class="login-btn my-2"
-              @click="login"
-              color="#727272"
-              to="/"
-              large
-              dark
-            >
-              Login
-            </v-btn>
-          </v-row>
-          <v-row>
-            <v-btn class="signup-btn" to="/signup">
-              Sign up
-            </v-btn>
-          </v-row>
+        <v-btn
+          class="login-btn my-2"
+          @click="login"
+          color="#727272"
+          to="/"
+          large
+          dark
+        >
+          Login
+        </v-btn>
+        <div class="signup-link">
+          <router-link class="signup-text" to="/signup">Sign Up</router-link>
         </div>
       </form>
-    </v-card>
+    </div>
   </div>
 </template>
 
@@ -54,63 +53,86 @@ export default {
 
   mixins: [validationMixin],
 
-
   validations: {
     username: { required },
-    password: { required, minLength : minLength(8) }
+    password: { required, minLength: minLength(8) }
   },
 
   data: () => ({
     username: "",
     password: "",
-    imageUrl : "../assets/cat-background.jpg"
+    imageUrl: "../assets/cat-background.jpg"
   }),
 
   methods: {
     login() {
-      // 
+      //
     }
   },
 
   computed: {
-    passwordError () {
-        const errors = []
-        if (!this.$v.password.$dirty) return errors
-        !this.$v.password.minLength && errors.push('Password must be at least 10 characters long')
-        !this.$v.password.required && errors.push('Password is required.')
-        return errors
-    },
+    passwordError() {
+      const errors = [];
+      if (!this.$v.password.$dirty) return errors;
+      !this.$v.password.minLength &&
+        errors.push("Password must be at least 10 characters long");
+      !this.$v.password.required && errors.push("Password is required.");
+      return errors;
+    }
   }
 };
 </script>
 <style lang="scss">
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap");
+.flex-container {
+  height: 100%;
+  margin-inline-start: 10%;
+  margin-inline-end: 10%;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
 .card-style-login {
-  margin: auto;
-  height: auto;
-  margin-right: 5%;
-  margin-top: 8%;
-  width: 30%;
-  background: #ffdddd;
-  padding: 20px;
+  width: 35em;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 32px;
 }
 .form-style-login {
-  width: 84%;
-  margin: 0 auto;
-  padding: 10px;
+  text-align: center;
+  margin: 5em 3em;
+  display: flex;
+  flex-direction: column;
 }
-.login-btn {
-  margin: auto;
-  width: 80%;
-}
-.signup-btn {
-  margin: auto;
-  margin-top: 10px;
-  width: 80%;
+.img-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .header {
   text-align: center;
-  margin-top: 10px;
-  display: block;
+
+  font-family: "Quicksand";
+  font-weight: bold;
+  font-size: 36px;
+}
+.login-btn {
+  /* width: 100%; */
+
+  font-family: "Quicksand";
+  font-weight: bold;
+  font-size: 18px;
+}
+.signup-link {
+  margin: 1em;
+}
+.signup-text {
+  font-family: "Quicksand";
+  font-weight: bold;
+}
+.text-field {
+  font-family: "Quicksand";
+  font-weight: regular;
 }
 /* write SCSS here */
 </style>
