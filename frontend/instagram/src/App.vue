@@ -31,26 +31,36 @@
         <span class="mr-2">Latest Release</span>
         <v-icon>mdi-open-in-new</v-icon>
       </v-btn>
+      <v-btn v-if="!isLogin" to="/login" outlined>Login / Sign Up</v-btn>
+      <v-btn v-if="isLogin" @click="logout" outlined>Log Out</v-btn>
     </v-app-bar>
 
-    <v-main>
-      <HelloWorld />
+    <v-main class="bg">
+      <router-view />
     </v-main>
   </v-app>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import HelloWorld from "./components/HelloWorld.vue";
+import { AuthActions, AuthGetters } from "./types/auth";
+import { Component, Vue } from "vue-property-decorator";
+import { Getter } from "vuex-class";
 
-export default Vue.extend({
-  name: "App",
-
+@Component({
   components: {
     HelloWorld
-  },
-
-  data: () => ({
-  })
-});
+  }
+})
+export default class App extends Vue {
+  @Getter(AuthGetters.isLogin) private isLogin!: () => boolean;
+}
 </script>
+<style lang="scss">
+  .bg {
+    background-image: url("assets/cat-background.jpg");
+    // background: green;
+    background-repeat: no-repeat;
+    background-size:cover
+  }
+</style>

@@ -46,7 +46,6 @@
         <h2 class="headline font-weight-bold mb-3">
           Important Links
         </h2>
-
         <v-row justify="center">
           <a
             v-for="(link, i) in importantLinks"
