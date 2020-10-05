@@ -16,7 +16,6 @@ export interface LoginCredentials {
 export interface SignUpCredentials {
   username: string;
   password: string;
-  email: string;
 }
 
 export enum AuthGetters {

@@ -40,7 +40,7 @@
       ></v-text-field> -->
       <div>  
         <v-row>
-          <v-btn class="register-btn my-2" @click="submit" color="#727272" to="/"
+          <v-btn class="register-btn my-2" @click="submit" color="#727272"
               large
               dark>
             Register
@@ -56,9 +56,16 @@
 import { required } from "vuelidate/lib/validators";
 import {  Vue } from "vue-property-decorator";
 import Component from 'vue-class-component'
+import { Action, Getter } from "vuex-class";
+import { AuthActions, SignUpCredentials } from "../types/auth";
+
 @Component
 export default class Signup extends Vue { 
 
+  @Action(AuthActions.signUp) private signUp!: (
+    credentials: SignUpCredentials
+  ) => void;
+  
   private username = ""
   private showPassword1 =  false
   private showPassword2 = false
@@ -69,6 +76,15 @@ export default class Signup extends Vue {
         min: v => v.length >= 8 || 'Min 8 characters',
         emailMatch: () => ('The email and password you entered don\'t match'),
   }
+
+  submit() {
+    // validate
+    this.signUp({
+        username: this.username,
+        password: this.password1,
+    });
+  }
+
 }
 </script>
 <style lang="scss">

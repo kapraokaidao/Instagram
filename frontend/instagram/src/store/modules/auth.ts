@@ -80,7 +80,6 @@ const store: StoreOptions<AuthState> = {
       payload: SignUpCredentials
     ) => {
       commit(AuthMutations.setFetchingLogin, true);
-
       let response;
       try {
         response = await axios.post<string>("/auth/register", payload);
@@ -114,10 +113,11 @@ const store: StoreOptions<AuthState> = {
       router.push("/login");
     },
     [AuthActions.redirect]: async ({ commit }) => {
-      const response = await axios.get<User>("/user/me");
+      const pathTogetUser = "/user/me"
+      const response = await axios.get<User>(pathTogetUser);
       if (response.status === 200) {
         commit(AuthMutations.setUser, response.data);
-        router.push("/");
+        router.push("/profile");
       }
       commit(AuthMutations.setFetchingLogin, false);
     },

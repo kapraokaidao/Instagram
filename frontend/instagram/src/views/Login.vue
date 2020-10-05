@@ -24,9 +24,8 @@
         ></v-text-field>
         <v-btn
           class="login-btn my-2"
-          @click="login"
+          @click="submit"
           color="#727272"
-          to="/"
           large
           dark
         >
@@ -43,15 +42,24 @@
 <script lang="ts">
 import {  Vue } from "vue-property-decorator";
 import Component from 'vue-class-component'
+import { Action, Getter } from "vuex-class";
+import { AuthActions, LoginCredentials } from '../types/auth'
 
 @Component
 export default class Login extends Vue {
-
+  @Action(AuthActions.login) private login! : (credential : LoginCredentials) => void
   // data
   private username =  ""
   private password =  ""
   private imageUrl =  "../assets/cat-background.jpg"
-
+  
+  submit() {
+    // validate
+    this.login({
+      username: this.username,
+      password: this.password
+    })
+  }
 }
 </script>
 <style lang="scss">
