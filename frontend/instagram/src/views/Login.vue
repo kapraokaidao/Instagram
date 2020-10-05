@@ -40,25 +40,27 @@
 </template>
 
 <script lang="ts">
-import {  Vue } from "vue-property-decorator";
-import Component from 'vue-class-component'
-import { Action, Getter } from "vuex-class";
-import { AuthActions, LoginCredentials } from '../types/auth'
+import { Vue } from "vue-property-decorator";
+import Component from "vue-class-component";
+import { Action } from "vuex-class";
+import { AuthActions, LoginCredentials } from "../types/auth";
 
 @Component
 export default class Login extends Vue {
-  @Action(AuthActions.login) private login! : (credential : LoginCredentials) => void
+  @Action(AuthActions.login) private login!: (
+    credential: LoginCredentials
+  ) => void;
   // data
-  private username =  ""
-  private password =  ""
-  private imageUrl =  "../assets/cat-background.jpg"
-  
+  private username = "";
+  private password = "";
+  private imageUrl = "../assets/cat-background.jpg";
+
   submit() {
     // validate
     this.login({
       username: this.username,
       password: this.password
-    })
+    });
   }
 }
 </script>

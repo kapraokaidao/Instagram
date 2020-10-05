@@ -113,7 +113,7 @@ const store: StoreOptions<AuthState> = {
       router.push("/login");
     },
     [AuthActions.redirect]: async ({ commit }) => {
-      const pathTogetUser = "/user/me"
+      const pathTogetUser = "/user/me";
       const response = await axios.get<User>(pathTogetUser);
       if (response.status === 200) {
         commit(AuthMutations.setUser, response.data);

@@ -32,9 +32,13 @@
       ></v-text-field>
       <div>
         <v-row>
-          <v-btn class="register-btn my-2" @click="submit" color="#727272"
-              large
-              dark>
+          <v-btn
+            class="register-btn my-2"
+            @click="submit"
+            color="#727272"
+            large
+            dark
+          >
             Register
           </v-btn>
         </v-row>
@@ -44,38 +48,35 @@
 </template>
 
 <script lang="ts">
-import { required } from "vuelidate/lib/validators";
-import {  Vue } from "vue-property-decorator";
-import Component from 'vue-class-component'
-import { Action, Getter } from "vuex-class";
+import { Vue } from "vue-property-decorator";
+import Component from "vue-class-component";
+import { Action } from "vuex-class";
 import { AuthActions, SignUpCredentials } from "../types/auth";
 
 @Component
-export default class Signup extends Vue { 
-
+export default class Signup extends Vue {
   @Action(AuthActions.signUp) private signUp!: (
     credentials: SignUpCredentials
   ) => void;
-  
-  private username = ""
-  private showPassword1 =  false
-  private showPassword2 = false
-  private password1 = ''
-  private password2=  ''
+
+  private username = "";
+  private showPassword1 = false;
+  private showPassword2 = false;
+  private password1 = "";
+  private password2 = "";
   private rules = {
-        required: value => !!value || 'Required.',
-        min: v => v.length >= 8 || 'Min 8 characters',
-        emailMatch: () => ('The email and password you entered don\'t match'),
-  }
+    required: value => !!value || "Required.",
+    min: v => v.length >= 8 || "Min 8 characters",
+    emailMatch: () => "The email and password you entered don't match"
+  };
 
   submit() {
     // validate
     this.signUp({
-        username: this.username,
-        password: this.password1,
+      username: this.username,
+      password: this.password1
     });
   }
-
 }
 </script>
 
