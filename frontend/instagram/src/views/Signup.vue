@@ -52,37 +52,24 @@
   </v-card>
 </template>
 
-<script>
-import { validationMixin } from "vuelidate";
+<script lang="ts">
 import { required } from "vuelidate/lib/validators";
+import {  Vue } from "vue-property-decorator";
+import Component from 'vue-class-component'
+@Component
+export default class Signup extends Vue { 
 
-export default {
-  name: "Signup",
-  mixins: [validationMixin],
-
-  validations: {
-    username: { required },
-  },
-
-  data: () => ({
-    username: "",
-    showPassword1: false,
-    showPassword2: false,
-    password1: '',
-    password2: '',
-    rules: {
-          required: value => !!value || 'Required.',
-          min: v => v.length >= 8 || 'Min 8 characters',
-          emailMatch: () => ('The email and password you entered don\'t match'),
-    }
-  }),
-
-  methods: {
-    register() {
-        // 
-    }
+  private username = ""
+  private showPassword1 =  false
+  private showPassword2 = false
+  private password1 = ''
+  private password2=  ''
+  private rules = {
+        required: value => !!value || 'Required.',
+        min: v => v.length >= 8 || 'Min 8 characters',
+        emailMatch: () => ('The email and password you entered don\'t match'),
   }
-};
+}
 </script>
 <style lang="scss">
   .card-style-signup {

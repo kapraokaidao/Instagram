@@ -14,8 +14,6 @@
           :error-messages="usernameError"
           label="Username"
           required
-          @input="$v.username.$touch()"
-          @blur="$v.username.$touch()"
         ></v-text-field>
         <v-text-field
           class="text-field"
@@ -23,8 +21,6 @@
           :error-messages="passwordError"
           label="Password"
           required
-          @input="$v.password.$touch()"
-          @blur="$v.password.$touch()"
         ></v-text-field>
         <v-btn
           class="login-btn my-2"
@@ -44,43 +40,19 @@
   </div>
 </template>
 
-<script>
-import { validationMixin } from "vuelidate";
-import { required, minLength, email } from "vuelidate/lib/validators";
+<script lang="ts">
+import {  Vue } from "vue-property-decorator";
+import Component from 'vue-class-component'
 
-export default {
-  name: "Login",
+@Component
+export default class Login extends Vue {
 
-  mixins: [validationMixin],
+  // data
+  private username =  ""
+  private password =  ""
+  private imageUrl =  "../assets/cat-background.jpg"
 
-  validations: {
-    username: { required },
-    password: { required, minLength: minLength(8) }
-  },
-
-  data: () => ({
-    username: "",
-    password: "",
-    imageUrl: "../assets/cat-background.jpg"
-  }),
-
-  methods: {
-    login() {
-      //
-    }
-  },
-
-  computed: {
-    passwordError() {
-      const errors = [];
-      if (!this.$v.password.$dirty) return errors;
-      !this.$v.password.minLength &&
-        errors.push("Password must be at least 10 characters long");
-      !this.$v.password.required && errors.push("Password is required.");
-      return errors;
-    }
-  }
-};
+}
 </script>
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap");
