@@ -55,19 +55,19 @@ export default {
 
   validations: {
     username: { required },
-    password: { required, minLength: minLength(8) }
+    password: { required, minLength: minLength(8) },
   },
 
   data: () => ({
     username: "",
     password: "",
-    imageUrl: "../assets/cat-background.jpg"
+    imageUrl: "../assets/cat-background.jpg",
   }),
 
   methods: {
     login() {
       //
-    }
+    },
   },
 
   computed: {
@@ -78,8 +78,8 @@ export default {
         errors.push("Password must be at least 10 characters long");
       !this.$v.password.required && errors.push("Password is required.");
       return errors;
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss">
@@ -117,8 +117,6 @@ export default {
   font-size: 36px;
 }
 .login-btn {
-  /* width: 100%; */
-
   font-family: "Quicksand";
   font-weight: bold;
   font-size: 18px;
@@ -134,5 +132,4 @@ export default {
   font-family: "Quicksand";
   font-weight: regular;
 }
-/* write SCSS here */
 </style>
