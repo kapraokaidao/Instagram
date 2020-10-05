@@ -97,8 +97,6 @@ export default class Login extends Vue {
   font-size: 36px;
 }
 .login-btn {
-  /* width: 100%; */
-
   font-family: "Quicksand";
   font-weight: bold;
   font-size: 18px;
@@ -114,5 +112,4 @@ export default class Login extends Vue {
   font-family: "Quicksand";
   font-weight: regular;
 }
-/* write SCSS here */
 </style>
