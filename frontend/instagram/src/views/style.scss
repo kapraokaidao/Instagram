@@ -1,0 +1,68 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap");
+
+* {
+    font-weight: regular;
+    font-family: "Quicksand";
+    letter-spacing: normal !important;
+}
+
+.flex-container {
+  height: 100%;
+  margin-inline-start: 10%;
+  margin-inline-end: 10%;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+.center-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.card-style {
+  width: 35em;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 32px !important;
+}
+.form-style {
+  text-align: center;
+  margin: 5em 3em;
+  display: flex;
+  flex-direction: column;
+}
+.img-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+h2 {
+  font-weight: bold;
+  font-size: 36px;
+  color: #515151;
+}
+.primary-btn {
+    height: 3em !important;
+    font-size: 18px !important;
+    color: white !important;
+    text-transform: none !important;
+    font-weight: bold !important;
+    border-radius: 9px !important;
+    background-color: #49A18C !important;
+    box-shadow: none !important;
+}
+.secondary-btn {
+    height: 3em !important;
+    font-size: 18px !important;
+    color: white !important;
+    text-transform: none !important;
+    font-weight: bold !important;
+    border-radius: 9px !important;
+    background-color: #727272  !important;
+    box-shadow: none !important;
+}
+.signup-text {
+    font-size: 18px;
+    font-weight: bold;
+}

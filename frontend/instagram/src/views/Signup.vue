@@ -1,50 +1,45 @@
 <template>
-  <v-card class="card-style-signup">
-    <form class="form-style-signup">
-      <div class="header">
+  <div class="center-container">
+    <v-card class="card-style">
+      <form class="form-style">
         <h2>Signup</h2>
-      </div>
-      <v-text-field
-        v-model="username"
-        :rules="[rules.required]"
-        label="Username"
-        required
-      ></v-text-field>
-      <v-text-field
-        v-model="password1"
-        :append-icon="showPassword1 ? 'mdi-eye' : 'mdi-eye-off'"
-        :rules="[rules.required, rules.min]"
-        :type="showPassword1 ? 'text' : 'password'"
-        label="Password"
-        hint="At least 8 characters"
-        counter
-        @click:append="showPassword1 = !showPassword1"
-      ></v-text-field>
-      <v-text-field
-        v-model="password2"
-        :append-icon="showPassword2 ? 'mdi-eye' : 'mdi-eye-off'"
-        :rules="[rules.required, rules.min]"
-        :type="showPassword2 ? 'text' : 'password'"
-        label="Password"
-        hint="At least 8 characters"
-        counter
-        @click:append="showPassword2 = !showPassword2"
-      ></v-text-field>
-      <div>
-        <v-row>
-          <v-btn
-            class="register-btn my-2"
-            @click="submit"
-            color="#727272"
-            large
-            dark
-          >
+        <div class="px-12 my-6">
+          <v-text-field
+            v-model="username"
+            :rules="[rules.required]"
+            label="Username"
+            required
+          ></v-text-field>
+          <v-text-field
+            v-model="password1"
+            :append-icon="showPassword1 ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="[rules.required, rules.min]"
+            :type="showPassword1 ? 'text' : 'password'"
+            label="Password"
+            hint="At least 8 characters"
+            counter
+            @click:append="showPassword1 = !showPassword1"
+          ></v-text-field>
+          <v-text-field
+            v-model="password2"
+            :append-icon="showPassword2 ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="[rules.required, rules.min]"
+            :type="showPassword2 ? 'text' : 'password'"
+            label="Password"
+            hint="At least 8 characters"
+            counter
+            @click:append="showPassword2 = !showPassword2"
+          ></v-text-field>
+        </div>
+
+        <div class="px-12 my-3">
+          <v-btn block class="primary-btn" @click="submit" to="/">
             Register
           </v-btn>
-        </v-row>
-      </div>
-    </form>
-  </v-card>
+        </div>
+      </form>
+    </v-card>
+  </div>
 </template>
 
 <script lang="ts">
@@ -52,6 +47,7 @@ import { Vue } from "vue-property-decorator";
 import Component from "vue-class-component";
 import { Action } from "vuex-class";
 import { AuthActions, SignUpCredentials } from "../types/auth";
+import sassStyles from "./style.scss";
 
 @Component
 export default class Signup extends Vue {
@@ -80,4 +76,11 @@ export default class Signup extends Vue {
 }
 </script>
 
-<style scoped></style>
+<style scope lang="scss">
+.bg {
+  overflow: hidden;
+  background-image: url("../assets/blur-cat-background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+</style>
