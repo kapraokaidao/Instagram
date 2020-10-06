@@ -80,31 +80,4 @@ export default class Signup extends Vue {
 }
 </script>
 
-<style scope lang="scss">
-.card-style-signup {
-  margin: 0 auto;
-  width: 30%;
-  background: #ffffff;
-  padding: 20px;
-  margin-top: 10%;
-}
-.form-style-signup {
-  width: 70%;
-  margin: 0 auto;
-  padding: 10px;
-}
-.register-btn {
-  margin: auto;
-  width: 70%;
-}
-.header {
-  text-align: center;
-  margin-top: 10px;
-  display: block;
-}
-.bg {
-  background-image: url("../assets/blur-cat-background.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-</style>
+<style scoped></style>

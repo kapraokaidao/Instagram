@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import Login from "../views/Login.vue";
+import UpdateProfile from "../views/UpdateProfile.vue";
 
 Vue.use(VueRouter);
 
@@ -28,8 +29,13 @@ const routes: Array<RouteConfig> = [
     path: "/signup",
     name: "Signup",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Signup.vue")
-  }
+      import(/* webpackChunkName: "about" */ "../views/Signup.vue"),
+  },
+  {
+    path: "/profile/update",
+    name: "UpdateProfile",
+    component: UpdateProfile,
+  },
 ];
 
 const router = new VueRouter({
