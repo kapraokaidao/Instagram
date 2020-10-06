@@ -75,12 +75,3 @@ export default class Signup extends Vue {
   }
 }
 </script>
-
-<style scope lang="scss">
-.bg {
-  overflow: hidden;
-  background-image: url("../assets/blur-cat-background.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-</style>
