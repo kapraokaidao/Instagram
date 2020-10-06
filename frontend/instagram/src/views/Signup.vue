@@ -36,7 +36,6 @@
             class="register-btn my-2"
             @click="submit"
             color="#727272"
-            to="/"
             large
             dark
           >
@@ -48,37 +47,37 @@
   </v-card>
 </template>
 
-<script>
-import { validationMixin } from "vuelidate";
-import { required } from "vuelidate/lib/validators";
+<script lang="ts">
+import { Vue } from "vue-property-decorator";
+import Component from "vue-class-component";
+import { Action } from "vuex-class";
+import { AuthActions, SignUpCredentials } from "../types/auth";
 
-export default {
-  name: "Signup",
-  mixins: [validationMixin],
+@Component
+export default class Signup extends Vue {
+  @Action(AuthActions.signUp) private signUp!: (
+    credentials: SignUpCredentials
+  ) => void;
 
-  validations: {
-    username: { required },
-  },
+  private username = "";
+  private showPassword1 = false;
+  private showPassword2 = false;
+  private password1 = "";
+  private password2 = "";
+  private rules = {
+    required: value => !!value || "Required.",
+    min: v => v.length >= 8 || "Min 8 characters",
+    emailMatch: () => "The email and password you entered don't match"
+  };
 
-  data: () => ({
-    username: "",
-    showPassword1: false,
-    showPassword2: false,
-    password1: "",
-    password2: "",
-    rules: {
-      required: (value) => !!value || "Required.",
-      min: (v) => v.length >= 8 || "Min 8 characters",
-      emailMatch: () => "The email and password you entered don't match",
-    },
-  }),
-
-  methods: {
-    register() {
-      //
-    },
-  },
-};
+  submit() {
+    // validate
+    this.signUp({
+      username: this.username,
+      password: this.password1
+    });
+  }
+}
 </script>
 
 <style scoped></style>

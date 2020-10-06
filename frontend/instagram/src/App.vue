@@ -24,14 +24,14 @@
 
 <script lang="ts">
 import HelloWorld from "./components/HelloWorld.vue";
-import { AuthActions, AuthGetters } from "./types/auth";
+import { AuthGetters } from "./types/auth";
 import { Component, Vue } from "vue-property-decorator";
 import { Getter } from "vuex-class";
 
 @Component({
   components: {
-    HelloWorld,
-  },
+    HelloWorld
+  }
 })
 export default class App extends Vue {
   @Getter(AuthGetters.isLogin) private isLogin!: () => boolean;
