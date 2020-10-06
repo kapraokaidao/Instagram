@@ -22,7 +22,6 @@
             required
           ></v-text-field>
         </div>
-
         <div class="px-12 my-3">
           <v-btn block class="secondary-btn" @click="login" to="/">
             Login

@@ -1,56 +1,56 @@
 <template>
-  <div>
-    <h1 className="head">Edit Profile</h1>
-    <v-row no-gutters>
-      <v-col>
-        <v-card class="ma-4 pa-4">
-          <v-text-field
-            v-model="username"
-            :rules="[rules.required]"
-            label="Username"
-            required
-          ></v-text-field>
-          <v-text-field
-            v-model="password1"
-            :append-icon="showPassword1 ? 'mdi-eye' : 'mdi-eye-off'"
-            :rules="[rules.required, rules.min]"
-            :type="showPassword1 ? 'text' : 'password'"
-            label="Password"
-            hint="At least 8 characters"
-            counter
-            @click:append="showPassword1 = !showPassword1"
-          ></v-text-field>
-          <v-text-field
-            v-model="password2"
-            :append-icon="showPassword2 ? 'mdi-eye' : 'mdi-eye-off'"
-            :rules="[rules.required, rules.min]"
-            :type="showPassword2 ? 'text' : 'password'"
-            label="Password"
-            hint="At least 8 characters"
-            counter
-            @click:append="showPassword2 = !showPassword2"
-          ></v-text-field>
-        </v-card>
-      </v-col>
-      <v-col>
-        <v-file-input
-          label="Upload new picture"
-          filled
-          prepend-icon="mdi-camera"
-        ></v-file-input>
-        <v-textarea solo name="bio" label="Bio"></v-textarea>
-      </v-col>
-    </v-row>
-    <v-btn
-      class="register-btn my-2"
-      @click="submit"
-      color="#727272"
-      to="/"
-      large
-      dark
-    >
-      Submit Edit
-    </v-btn>
+  <div class="plain-bg">
+    <div class="margin-container pt-12">
+      <h1 className="head">Edit Profile</h1>
+      <v-row>
+        <v-col class="col-5">
+          <v-card flat class="pa-5">
+            <v-text-field
+              class="mb-6"
+              v-model="username"
+              :rules="[rules.required]"
+              label="Username"
+              required
+            ></v-text-field>
+            <v-text-field
+              v-model="password1"
+              :append-icon="showPassword1 ? 'mdi-eye' : 'mdi-eye-off'"
+              :rules="[rules.required, rules.min]"
+              :type="showPassword1 ? 'text' : 'password'"
+              label="Password"
+              hint="At least 8 characters"
+              counter
+              @click:append="showPassword1 = !showPassword1"
+            ></v-text-field>
+            <v-text-field
+              v-model="password2"
+              :append-icon="showPassword2 ? 'mdi-eye' : 'mdi-eye-off'"
+              :rules="[rules.required, rules.min]"
+              :type="showPassword2 ? 'text' : 'password'"
+              label="Password"
+              hint="At least 8 characters"
+              counter
+              @click:append="showPassword2 = !showPassword2"
+            ></v-text-field>
+          </v-card>
+        </v-col>
+        <v-col class="col-5 offset-1">
+          <v-file-input
+            flat
+            label="Upload new picture"
+            prepend-icon="mdi-camera"
+          ></v-file-input>
+          <v-textarea flat name="bio" label="Bio"></v-textarea>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col class="col-4">
+          <v-btn class="primary-btn my-2" block @click="submit" to="/login">
+            Submit Edit
+          </v-btn>
+        </v-col>
+      </v-row>
+    </div>
   </div>
 </template>
 
@@ -64,12 +64,12 @@ export default {
     password1: "",
     password2: "",
     rules: {
-      required: (value) => !!value || "Required.",
-      min: (v) => v.length >= 8 || "Min 8 characters",
-      emailMatch: () => "The email and password you entered don't match",
-    },
+      required: value => !!value || "Required.",
+      min: v => v.length >= 8 || "Min 8 characters",
+      emailMatch: () => "The email and password you entered don't match"
+    }
   }),
-  methods: {},
+  methods: {}
 };
 </script>
 

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap");
 
 * {
     font-weight: regular;
@@ -19,10 +19,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-inline-start: 10%;
+    margin-inline-end: 10%;
+}
+.margin-container {
+  height: 100%;
+  margin-inline-start: 10%;
+  margin-inline-end: 10%;
 }
 .card-style {
-  width: 35em;
-  padding: 30px;
+  width: 32em;
   background: #ffffff;
   border-radius: 32px !important;
 }
@@ -71,4 +77,11 @@ h2 {
   background-image: url("../assets/blur-cat-background.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+}
+.plain-bg {
+  background-color: white;
+  height: 100%;
+}
+.debug {
+  background-color: yellow !important;
 }
