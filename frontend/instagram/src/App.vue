@@ -2,6 +2,20 @@
   <v-app>
     <v-main class="bg">
       <v-container>
+        <v-row class="mb-14">
+          <v-col>
+            <v-img max-width="40" src="./assets/logo.png" />
+          </v-col>
+          <v-col>
+            My profile
+          </v-col>
+          <v-col>
+            Upload photo
+          </v-col>
+          <v-col>
+            Sign out
+          </v-col>
+        </v-row>
         <router-view />
       </v-container>
     </v-main>
@@ -26,10 +40,10 @@ export default class App extends Vue {
 
 <style>
 .bg {
-  /*background-image: url("assets/blur-cat-background.jpg");
+  background-image: url("assets/blur-cat-background.jpg");
   background-repeat: no-repeat;
-  background-size: cover;*/
-  background-color: white;
+  background-size: cover;
+  /*background-color: white;*/
 }
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap");
 .flex-container {
