@@ -10,7 +10,7 @@ async function bootstrap() {
 
   const options = new DocumentBuilder()
     .addBearerAuth()
-    .setTitle("IG-clone backend")
+    .setTitle("Instagram")
     .setVersion("0.1")
     .build();
   const document = SwaggerModule.createDocument(app, options);

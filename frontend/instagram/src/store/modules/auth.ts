@@ -6,39 +6,39 @@ import {
   AuthMutations,
   AuthGetters
 } from "@/types/auth";
+import { cloneDeep } from "lodash";
 import { User } from "@/types/user";
-import { ActionTree, GetterTree, Module, MutationTree, StoreOptions } from "vuex";
+import { ActionTree, GetterTree, Module, MutationTree } from "vuex";
 import router from "../../router";
 import axios from "axios";
+import { RootState, rootState } from "@/store/modules/index";
 
 const state: AuthState = {
-  fetchingLogin: false,
-  error: false,
+  ...cloneDeep(rootState),
   token: null,
   user: null,
-  errorMessage: ""
 }
 
-const getters: GetterTree<AuthState, any> = {
+const getters: GetterTree<AuthState, RootState> = {
   [AuthGetters.isLogin]: state => !!state.token,
   [AuthGetters.getUser]: state => state.user,
-  [AuthGetters.isFetchingLogin]: state => state.fetchingLogin,
-  [AuthGetters.getError]: state => state.error,
-  [AuthGetters.getErrorMessage]: state => state.errorMessage
+  [AuthGetters.isLoading]: state => state.isLoading,
+  [AuthGetters.getError]: state => state.isError,
+  [AuthGetters.getErrorData]: state => state.errorData
 }
 
 const mutations: MutationTree<AuthState> = {
   [AuthMutations.setToken]: (state, payload: string) => {
     state.token = payload;
   },
-  [AuthMutations.setFetchingLogin]: (state, payload: boolean) => {
-    state.fetchingLogin = payload;
+  [AuthMutations.setLoading]: (state, payload: boolean) => {
+    state.isLoading = payload;
   },
   [AuthMutations.setError]: (state, payload: boolean) => {
-    state.error = payload;
+    state.isError = payload;
   },
-  [AuthMutations.setErrorMessage]: (state, payload: string) => {
-    state.errorMessage = payload;
+  [AuthMutations.setErrorData]: (state, payload: string) => {
+    state.errorData = payload;
   },
   [AuthMutations.setUser]: (state, payload: User) => {
     state.user = payload;
@@ -50,7 +50,7 @@ const actions: ActionTree<AuthState, any> = {
     { commit, dispatch },
     payload: LoginCredentials
   ) => {
-    commit(AuthMutations.setFetchingLogin, true);
+    commit(AuthMutations.setLoading, true);
     try {
       const response = await axios.post<string>("/auth/login", payload);
       if (response.status === 201) {
@@ -65,23 +65,23 @@ const actions: ActionTree<AuthState, any> = {
       commit(AuthMutations.setError, true);
       if (error.toString().includes("401")) {
         commit(
-          AuthMutations.setErrorMessage,
+          AuthMutations.setErrorData,
           "username or password is wrong"
         );
       } else {
         commit(
-          AuthMutations.setErrorMessage,
+          AuthMutations.setErrorData,
           "something is wrong with the server"
         );
       }
     }
-    commit(AuthMutations.setFetchingLogin, false);
+    commit(AuthMutations.setLoading, false);
   },
   [AuthActions.signUp]: async (
     { commit, dispatch },
     payload: SignUpCredentials
   ) => {
-    commit(AuthMutations.setFetchingLogin, true);
+    commit(AuthMutations.setLoading, true);
     let response;
     try {
       response = await axios.post<string>("/auth/register", payload);
@@ -97,17 +97,17 @@ const actions: ActionTree<AuthState, any> = {
       commit(AuthMutations.setError, true);
 
       if (error.toString().includes("400")) {
-        commit(AuthMutations.setErrorMessage, "username is already taken");
+        commit(AuthMutations.setErrorData, "username is already taken");
       } else if (error.toString().includes("500")) {
-        commit(AuthMutations.setErrorMessage, "email is already taken");
+        commit(AuthMutations.setErrorData, "email is already taken");
       } else {
         commit(
-          AuthMutations.setErrorMessage,
+          AuthMutations.setErrorData,
           "something is wrong with the server"
         );
       }
     }
-    commit(AuthMutations.setFetchingLogin, false);
+    commit(AuthMutations.setLoading, false);
   },
   [AuthActions.logout]: async ({ commit }) => {
     commit(AuthMutations.setUser, null);
@@ -121,7 +121,7 @@ const actions: ActionTree<AuthState, any> = {
       commit(AuthMutations.setUser, response.data);
       router.push("/profile");
     }
-    commit(AuthMutations.setFetchingLogin, false);
+    commit(AuthMutations.setLoading, false);
   },
   [AuthActions.setAxiosHeader]: ({ state }) => {
     if (state.token) {
@@ -138,7 +138,6 @@ const AuthModule: Module<AuthState, any> = {
   getters,
   mutations,
   actions,
-
 }
 
 export default AuthModule;
