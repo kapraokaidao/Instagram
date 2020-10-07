@@ -1,3 +1,5 @@
+import { RootState } from "@/store/modules";
+
 export interface User {
   _id: string;
   username: string;
@@ -5,8 +7,8 @@ export interface User {
   bio: string;
 }
 
-export interface UserState {
-  isFetching: boolean;
+export interface UserState extends RootState {
+  isLoading: boolean;
   isSuccess: boolean;
   isError: boolean;
   user: User | null;

@@ -1,11 +1,9 @@
 import { User } from "../types/user";
+import { RootState } from "@/store/modules";
 
-export interface AuthState {
-  fetchingLogin: boolean;
-  error: boolean;
+export interface AuthState extends RootState {
   token: string | null;
   user: User | null;
-  errorMessage: string;
 }
 
 export interface LoginCredentials {
@@ -20,18 +18,18 @@ export interface SignUpCredentials {
 
 export enum AuthGetters {
   isLogin = "isLogin",
-  isFetchingLogin = "isFetchingLogin",
+  isLoading = "isLoading",
   getUser = "getUser",
   getError = "getError",
-  getErrorMessage = "getErrorMessage"
+  getErrorData = "getErrorData"
 }
 
 export enum AuthMutations {
   setToken = "setToken",
-  setFetchingLogin = "setFetchingLogin",
+  setLoading = "setLoading",
   setError = "setError",
   setUser = "setUser",
-  setErrorMessage = "serErrorMessage"
+  setErrorData = "setErrorData"
 }
 
 export enum AuthActions {
