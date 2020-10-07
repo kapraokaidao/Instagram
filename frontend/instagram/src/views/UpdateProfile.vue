@@ -1,7 +1,7 @@
 <template>
   <div class="plain-bg">
     <div class="margin-container pt-12">
-      <h1 className="head">Edit Profile</h1>
+      <h2 className="head">Edit Profile</h2>
       <v-row>
         <v-col class="col-5">
           <v-card flat class="pa-5">
@@ -73,14 +73,6 @@ export default {
 };
 </script>
 
-<style scoped>
-.head {
-  font-family: Quicksand;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 36px;
-  line-height: 45px;
-
-  color: #515151;
-}
+<style lang="scss">
+@import "./style.scss";
 </style>

@@ -37,7 +37,6 @@
   </div>
 </template>
 
-import sassStyles from "./style.scss";
 <script lang="ts">
 import { Vue } from "vue-property-decorator";
 import Component from "vue-class-component";
@@ -63,3 +62,12 @@ export default class Login extends Vue {
   }
 }
 </script>
+<style lang="scss">
+@import "./style.scss";
+.bg {
+  overflow: hidden;
+  background-image: url("../assets/blur-cat-background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+</style>

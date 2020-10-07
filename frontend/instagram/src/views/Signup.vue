@@ -47,7 +47,6 @@ import { Vue } from "vue-property-decorator";
 import Component from "vue-class-component";
 import { Action } from "vuex-class";
 import { AuthActions, SignUpCredentials } from "../types/auth";
-import sassStyles from "./style.scss";
 
 @Component
 export default class Signup extends Vue {
@@ -75,3 +74,12 @@ export default class Signup extends Vue {
   }
 }
 </script>
+<style lang="scss">
+@import "./style.scss";
+.bg {
+  overflow: hidden;
+  background-image: url("../assets/blur-cat-background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+</style>

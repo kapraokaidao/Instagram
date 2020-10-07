@@ -3,7 +3,9 @@
     <v-btn icon depressed class="ml-16" color="#FFFFFF" to="/signup"
       ><v-img class="nav-img" src="../assets/logo.png"
     /></v-btn>
-    <router-link class="nav-link ml-16" to="/profile/update">My Profile</router-link>
+    <router-link class="nav-link ml-16" to="/profile/update"
+      >My Profile</router-link
+    >
     <router-link class="nav-link ml-12" to="/signup">Upload photo</router-link>
     <v-spacer></v-spacer>
     <router-link class="nav-link mr-16" to="/">Sign Out</router-link>
@@ -26,12 +28,12 @@ module.exports = {
   font-weight: bold;
 }
 .nav-link {
-    color: #616161 !important;
-    text-decoration: none !important;
-    font-size: 14px;
+  color: #616161 !important;
+  text-decoration: none !important;
+  font-size: 14px;
 }
 .nav-img {
-    max-width: 40px;
-    max-height: 40px;
+  max-width: 40px;
+  max-height: 40px;
 }
 </style>

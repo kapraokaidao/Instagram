@@ -24,8 +24,8 @@ export default class App extends Vue {
   @Getter(AuthGetters.isLogin) private isLogin!: () => boolean;
 }
 </script>
-
-<style>
+<style lang="scss">
+@import "./views/style.scss";
 html {
   overflow-y: auto;
 }
