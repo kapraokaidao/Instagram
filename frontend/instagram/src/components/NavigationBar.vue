@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar flat>
+  <v-toolbar flat color="#FAFAFA">
     <v-btn icon depressed class="ml-16" color="#FFFFFF" to="/signup"
       ><v-img class="nav-img" src="../assets/logo.png"
     /></v-btn>
