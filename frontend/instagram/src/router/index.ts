@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import Login from "../views/Login.vue";
 import UpdateProfile from "../views/UpdateProfile.vue";
-
+import Home from "../views/Home.vue";
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
@@ -35,6 +35,11 @@ const routes: Array<RouteConfig> = [
     path: "/profile/update",
     name: "UpdateProfile",
     component: UpdateProfile
+  },
+  {
+    path: "/home",
+    name: "Home",
+    component: Home
   }
 ];
 
