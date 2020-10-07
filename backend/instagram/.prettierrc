@@ -6,13 +6,13 @@
   "semi": true,
   "overrides": [
     {
-      "files": "**/*.module.ts",
+      "files": "src/**/*.module.ts",
       "options": {
         "printWidth": 70
       }
     },
     {
-      "files": "**/*.repository.ts",
+      "files": "src/**/*.repository.ts",
       "options": {
         "printWidth": 83
       }
