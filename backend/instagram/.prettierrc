@@ -1,6 +1,21 @@
 {
+  "printWidth": 120,
   "singleQuote": false,
   "trailingComma": "es5",
   "tabWidth": 2,
-  "semi": true
+  "semi": true,
+  "overrides": [
+    {
+      "files": "**/*.module.ts",
+      "options": {
+        "printWidth": 60
+      }
+    },
+    {
+      "files": "**/*.repository.ts",
+      "options": {
+        "printWidth": 83
+      }
+    }
+  ]
 }

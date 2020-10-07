@@ -7,15 +7,9 @@ import { AuthCredentialsDto } from "./auth.dto";
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private readonly userService: UserService,
-    private readonly jwtService: JwtService
-  ) {}
+  constructor(private readonly userService: UserService, private readonly jwtService: JwtService) {}
 
-  async validateUser({
-    username,
-    password,
-  }: AuthCredentialsDto): Promise<UserDto> {
+  async validateUser({ username, password }: AuthCredentialsDto): Promise<UserDto> {
     const user: User = await this.userService.getUserWithPassword(username);
     if (user && compareSync(password, user.password)) {
       const { password, ...userDto } = user;

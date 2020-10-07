@@ -3,7 +3,9 @@ import { ApiTags } from "@nestjs/swagger";
 import { AuthService } from "./auth.service";
 import { User } from "../model/user.model";
 import { AuthCredentialsDto } from "./auth.dto";
+import { PublicAPI } from "../decorators/public-api.decorator";
 
+@PublicAPI()
 @ApiTags("Auth")
 @Controller("auth")
 export class AuthController {

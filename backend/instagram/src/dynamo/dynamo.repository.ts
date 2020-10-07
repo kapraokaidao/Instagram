@@ -17,9 +17,7 @@ export class DynamoRepository<T> {
       region: this.configService.get<string>("dynamoDB.region"),
       endpoint: this.configService.get<string>("dynamoDB.endpoint"),
       accessKeyId: this.configService.get<string>("dynamoDB.accessKeyId"),
-      secretAccessKey: this.configService.get<string>(
-        "dynamoDB.secretAccessKey"
-      ),
+      secretAccessKey: this.configService.get<string>("dynamoDB.secretAccessKey"),
     };
     AWS.config.update(options);
     this.db = new AWS.DynamoDB();

@@ -4,6 +4,9 @@ import { DynamoRepository } from "./dynamo.repository";
 @Global()
 @Module({
   imports: [],
-  providers: [DynamoRepository, { provide: "tableName", useValue: "" }],
+  providers: [
+    DynamoRepository,
+    { provide: "tableName", useValue: "" },
+  ],
 })
 export class DynamoModule {}
