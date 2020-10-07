@@ -26,7 +26,4 @@ export default class App extends Vue {
 </script>
 <style lang="scss">
 @import "./views/style.scss";
-html {
-  overflow-y: auto;
-}
 </style>

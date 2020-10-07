@@ -4,7 +4,7 @@
       <h2 className="head">Edit Profile</h2>
       <v-row>
         <v-col class="col-5">
-          <v-card flat class="pa-5">
+          <v-card flat class="pa-5" color="#FAFAFA">
             <v-text-field
               class="mb-6"
               v-model="username"
