@@ -29,7 +29,7 @@ const routes: Array<RouteConfig> = [
     path: "/signup",
     name: "Signup",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Signup.vue")
+      import(/* webpackChunkName: "signup" */ "../views/Signup.vue")
   },
   {
     path: "/profile/update",
