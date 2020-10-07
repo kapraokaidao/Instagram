@@ -1,38 +1,36 @@
 <template>
   <div class="flex-container">
-    <div class="card-style-login">
-      <form class="form-style-login">
+    <div class="card-style">
+      <form class="form-style">
         <div class="img-container">
           <v-img max-height="100" max-width="100" src="../assets/logo.png" />
         </div>
-        <h2 class="header">
+        <h2>
           Instagram
         </h2>
-        <v-text-field
-          class="text-field"
-          v-model="username"
-          :error-messages="usernameError"
-          label="Username"
-          required
-        ></v-text-field>
-        <v-text-field
-          class="text-field"
-          v-model="password"
-          :error-messages="passwordError"
-          label="Password"
-          required
-        ></v-text-field>
-        <v-btn
-          class="login-btn my-2"
-          @click="submit"
-          color="#727272"
-          large
-          dark
-        >
-          Login
-        </v-btn>
-        <div class="signup-link">
-          <router-link class="signup-text" to="/signup">Sign Up</router-link>
+        <div class="px-12">
+          <v-text-field
+            v-model="username"
+            :error-messages="usernameError"
+            label="Username"
+            required
+          ></v-text-field>
+          <v-text-field
+            v-model="password"
+            :error-messages="passwordError"
+            label="Password"
+            required
+          ></v-text-field>
+        </div>
+        <div class="px-12 my-3">
+          <v-btn block class="secondary-btn" @click="login" to="/">
+            Login
+          </v-btn>
+        </div>
+        <div class="my-3">
+          <router-link class="signup-text text-decoration-none" to="/signup"
+            >Sign Up</router-link
+          >
         </div>
       </form>
     </div>
@@ -64,5 +62,12 @@ export default class Login extends Vue {
   }
 }
 </script>
-
-<style scoped></style>
+<style lang="scss">
+@import "./style.scss";
+.bg {
+  overflow: hidden;
+  background-image: url("../assets/blur-cat-background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+</style>

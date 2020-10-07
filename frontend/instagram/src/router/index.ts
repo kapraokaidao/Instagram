@@ -29,13 +29,13 @@ const routes: Array<RouteConfig> = [
     path: "/signup",
     name: "Signup",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Signup.vue"),
+      import(/* webpackChunkName: "about" */ "../views/Signup.vue")
   },
   {
     path: "/profile/update",
     name: "UpdateProfile",
-    component: UpdateProfile,
-  },
+    component: UpdateProfile
+  }
 ];
 
 const router = new VueRouter({
