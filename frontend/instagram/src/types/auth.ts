@@ -16,7 +16,7 @@ export interface SignUpCredentials {
   password: string;
 }
 
-enum AuthGetters {
+export enum AuthGetters {
   isLogin = "isLogin",
   isLoading = "isLoading",
   getUser = "getUser",
