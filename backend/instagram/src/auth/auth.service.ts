@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/common";
 import { UserService } from "../user/user.service";
 import { User, UserDto } from "../model/user.model";
 import { compareSync } from "bcryptjs";
@@ -20,6 +20,9 @@ export class AuthService {
 
   async login(credential: AuthCredentialsDto) {
     const user: UserDto = await this.validateUser(credential);
+    if (!user) {
+      throw new UnauthorizedException("Wrong username or password");
+    }
     const { _id, ...userDto } = user;
     const payload = { userId: _id, ...userDto };
     return {
