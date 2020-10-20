@@ -3,6 +3,9 @@ import VueRouter, { RouteConfig } from "vue-router";
 import Login from "../views/Login.vue";
 import UpdateProfile from "../views/UpdateProfile.vue";
 import Home from "../views/Home.vue";
+import Profile from "../views/Profile.vue";
+import Upload from "../views/Upload.vue";
+import Follower from "../views/Follower.vue";
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
@@ -40,6 +43,21 @@ const routes: Array<RouteConfig> = [
     path: "/home",
     name: "Home",
     component: Home
+  },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: Profile
+  },
+  {
+    path: "/upload",
+    name: "Upload",
+    component: Upload
+  },
+  {
+    path: "/follower",
+    name: "Follower",
+    component: Follower
   }
 ];
 

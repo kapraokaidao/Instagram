@@ -1,12 +1,10 @@
 <template>
   <v-toolbar flat color="#FAFAFA">
-    <v-btn icon depressed class="ml-16" color="#FFFFFF" to="/signup"
+    <v-btn icon depressed class="ml-16" color="#FFFFFF" to="/home"
       ><v-img class="nav-img" src="../assets/logo.png"
     /></v-btn>
-    <router-link class="nav-link ml-16" to="/profile/update"
-      >My Profile</router-link
-    >
-    <router-link class="nav-link ml-12" to="/signup">Upload photo</router-link>
+    <router-link class="nav-link ml-16" to="/profile">My Profile</router-link>
+    <router-link class="nav-link ml-12" to="/upload">Upload photo</router-link>
     <v-spacer></v-spacer>
     <router-link class="nav-link mr-16" to="/">Sign Out</router-link>
   </v-toolbar>

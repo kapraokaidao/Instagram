@@ -1,9 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap");
 
 * {
-    font-weight: regular;
-    font-family: "Quicksand";
-    letter-spacing: normal !important;
+  font-weight: regular;
+  font-family: "Quicksand";
+  letter-spacing: normal !important;
 }
 
 .flex-container {
@@ -15,12 +15,12 @@
   align-items: center;
 }
 .center-container {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-inline-start: 10%;
-    margin-inline-end: 10%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-inline-start: 10%;
+  margin-inline-end: 10%;
 }
 .margin-container {
   height: 100%;
@@ -48,31 +48,58 @@ h2 {
   font-size: 36px;
   color: #515151;
 }
+h3 {
+  color: #515151;
+}
+h5 {
+  font-size: 14px;
+  font-weight: normal;
+  color: #c4c4c4;
+}
 .primary-btn {
-    height: 3em !important;
-    font-size: 18px !important;
-    color: white !important;
-    text-transform: none !important;
-    font-weight: bold !important;
-    border-radius: 9px !important;
-    background-color: #49A18C !important;
-    box-shadow: none !important;
+  height: 3em !important;
+  font-size: 18px !important;
+  color: white !important;
+  text-transform: none !important;
+  font-weight: bold !important;
+  border-radius: 9px !important;
+  background-color: #49a18c !important;
+  box-shadow: none !important;
 }
 .secondary-btn {
-    height: 3em !important;
-    font-size: 18px !important;
-    color: white !important;
-    text-transform: none !important;
-    font-weight: bold !important;
-    border-radius: 9px !important;
-    background-color: #727272  !important;
-    box-shadow: none !important;
+  height: 3em !important;
+  font-size: 18px !important;
+  color: white !important;
+  text-transform: none !important;
+  font-weight: bold !important;
+  border-radius: 9px !important;
+  background-color: #727272 !important;
+  box-shadow: none !important;
+}
+.secondary-sm-btn {
+  height: 2.5em !important;
+  font-size: 16px !important;
+  color: white !important;
+  text-transform: none !important;
+  font-weight: bold !important;
+  border-radius: 9px !important;
+  background-color: #727272 !important;
+  box-shadow: none !important;
 }
 .signup-text {
-    font-size: 18px;
-    font-weight: bold;
+  font-size: 18px;
+  font-weight: bold;
+}
+.secondary-link {
+  font-size: 24px;
+  font-weight: bold;
+  color: #515151 !important;
 }
 .plain-bg {
-  background-color: #FAFAFA;
+  background-color: #fafafa;
   height: 100%;
+}
+.card-wrapper {
+  background-color:white;
+  border-radius: 15px;
 }
