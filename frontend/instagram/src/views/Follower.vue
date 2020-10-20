@@ -4,16 +4,17 @@
       <v-row class="offset-2">
         <h2>169 Followers</h2>
       </v-row>
-      <v-row class="offset-2 py-6" v-for="user in followers" :key="user.id">
+      <v-row
+        class="offset-2 my-2 py-2 col-8 card-wrapper"
+        v-for="user in followers"
+        :key="user.id"
+      >
         <v-col align-self="center" class="col-1 mr-10">
           <v-avatar height="7em" width="7em">
             <v-img v-bind:src="user.url" v-bind:alt="user.name" />
           </v-avatar>
         </v-col>
-        <v-col
-          align-self="center"
-          class="ml-xs-16 col-sm-6 ml-sm-16 ml-md-12 col-md-4 col-xl-4 ml-xl-1"
-        >
+        <v-col align-self="center" class="ml-12 col-6">
           <v-row class="px-3" no-gutters>
             <h3>{{ user.name }}</h3>
           </v-row>
@@ -31,7 +32,7 @@
             >
           </v-row>
           <v-row no-gutters>
-            <v-col class="col-4">
+            <v-col class="px-3 col-4">
               <!-- TODO: Add script -->
               <v-btn block class="secondary-sm-btn mt-1">
                 Follow
