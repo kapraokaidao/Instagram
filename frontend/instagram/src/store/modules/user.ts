@@ -5,7 +5,13 @@ import {
   UserActions
 } from "@/types/user";
 import { User } from "@/types/user";
-import { ActionTree, GetterTree, Module, MutationTree, StoreOptions } from "vuex";
+import {
+  ActionTree,
+  GetterTree,
+  Module,
+  MutationTree,
+  StoreOptions
+} from "vuex";
 import axios from "axios";
 import { AuthMutations } from "@/types/auth";
 import { RootState, rootState } from "@/store/modules/index";
@@ -14,17 +20,17 @@ import { cloneDeep } from "lodash";
 const state: UserState = {
   ...cloneDeep(rootState),
   user: null
-}
+};
 
 const getters: GetterTree<UserState, RootState> = {
   [UserGetters.getUser]: state => state.user
-}
+};
 
 const mutations: MutationTree<UserState> = {
   [UserMutations.setUser]: (state: UserState, user: User) => {
     state.user = user;
   }
-}
+};
 
 const actions: ActionTree<UserState, RootState> = {
   [UserActions.fetchUser]: async ({ commit, getters }) => {
@@ -58,7 +64,7 @@ const actions: ActionTree<UserState, RootState> = {
       // TODO show error
     }
   }
-}
+};
 
 const UserModule: Module<UserState, RootState> = {
   namespaced: true,
@@ -66,7 +72,7 @@ const UserModule: Module<UserState, RootState> = {
   getters,
   mutations,
   actions
-}
+};
 
 export default UserModule;
 

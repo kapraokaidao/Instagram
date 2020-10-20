@@ -1,8 +1,8 @@
 export interface RootState {
-  isLoading: boolean,
-  isError: boolean,
-  isSuccess: boolean,
-  errorData: any
+  isLoading: boolean;
+  isError: boolean;
+  isSuccess: boolean;
+  errorData: any;
 }
 
 export const rootState: RootState = {
@@ -10,4 +10,4 @@ export const rootState: RootState = {
   isSuccess: false,
   isError: false,
   errorData: null
-}
+};

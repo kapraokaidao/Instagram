@@ -16,8 +16,8 @@ import { RootState, rootState } from "@/store/modules/index";
 const state: AuthState = {
   ...cloneDeep(rootState),
   token: null,
-  user: null,
-}
+  user: null
+};
 
 const getters: GetterTree<AuthState, RootState> = {
   [AuthGetters.isLogin]: state => !!state.token,
@@ -25,7 +25,7 @@ const getters: GetterTree<AuthState, RootState> = {
   [AuthGetters.isLoading]: state => state.isLoading,
   [AuthGetters.getError]: state => state.isError,
   [AuthGetters.getErrorData]: state => state.errorData
-}
+};
 
 const mutations: MutationTree<AuthState> = {
   [AuthMutations.setToken]: (state, payload: string) => {
@@ -43,7 +43,7 @@ const mutations: MutationTree<AuthState> = {
   [AuthMutations.setUser]: (state, payload: User) => {
     state.user = payload;
   }
-}
+};
 
 const actions: ActionTree<AuthState, any> = {
   [AuthActions.login]: async (
@@ -64,10 +64,7 @@ const actions: ActionTree<AuthState, any> = {
     } catch (error) {
       commit(AuthMutations.setError, true);
       if (error.toString().includes("401")) {
-        commit(
-          AuthMutations.setErrorData,
-          "username or password is wrong"
-        );
+        commit(AuthMutations.setErrorData, "username or password is wrong");
       } else {
         commit(
           AuthMutations.setErrorData,
@@ -125,19 +122,17 @@ const actions: ActionTree<AuthState, any> = {
   },
   [AuthActions.setAxiosHeader]: ({ state }) => {
     if (state.token) {
-      axios.defaults.headers.common[
-        "Authorization"
-        ] = `Bearer ${state.token}`;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${state.token}`;
     }
   }
-}
+};
 
 const AuthModule: Module<AuthState, any> = {
   namespaced: true,
   state,
   getters,
   mutations,
-  actions,
-}
+  actions
+};
 
 export default AuthModule;
