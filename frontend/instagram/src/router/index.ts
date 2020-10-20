@@ -5,6 +5,7 @@ import UpdateProfile from "../views/UpdateProfile.vue";
 import Home from "../views/Home.vue";
 import Profile from "../views/Profile.vue";
 import Upload from "../views/Upload.vue";
+import Follower from "../views/Follower.vue";
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
@@ -52,6 +53,11 @@ const routes: Array<RouteConfig> = [
     path: "/upload",
     name: "Upload",
     component: Upload
+  },
+  {
+    path: "/follower",
+    name: "Follower",
+    component: Follower
   }
 ];
 
