@@ -1,8 +1,8 @@
-import { Controller, Get } from "@nestjs/common";
+import { Body, Controller, Get, Put } from "@nestjs/common";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { UserService } from "./user.service";
 import { User } from "../decorators/user.decorator";
-import { UserDto } from "../model/user.model";
+import { UpdateBioDto, UserDto } from "../model/user.model";
 
 @ApiBearerAuth()
 @ApiTags("User")
@@ -12,6 +12,11 @@ export class UserController {
 
   @Get("me")
   me(@User() user: UserDto) {
-    return user;
+    return this.userService.findById(user._id);
+  }
+
+  @Put("me")
+  updateUser(@User() user: UserDto, @Body() bio: UpdateBioDto): Promise<boolean> {
+    return this.userService.updateBio(user._id, bio);
   }
 }

@@ -1,0 +1,33 @@
+service:
+  name: instagram
+
+plugins:
+  - serverless-plugin-optimize
+  - serverless-offline
+
+provider:
+  name: aws
+  tracing:
+    apiGateway: true
+  runtime: nodejs12.x
+  stage: ${opt:stage, 'dev'}
+  region: ap-southeast-1
+  # iamRoleStatements:
+  #   - ${file(iam/UserTableIAM.yml):UserTableIAM}
+  environment: ${file(secrets.yml)}
+
+# resources:
+#   Resources:
+#     UserTable: ${file(resources/UserTable.yml):UserTable}
+
+functions:
+  main:
+    handler: dist/serverless.handler
+    events:
+      - http:
+          method: any
+          path: /{any+}
+
+custom:
+  optimize:
+    esternal: ['swagger-ui-dist']

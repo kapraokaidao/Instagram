@@ -7,10 +7,15 @@ export class UserDto {
   username: string;
 
   @ApiProperty()
-  displayName?: string;
+  bio?: string;
 }
 
 export class User extends UserDto {
   @ApiProperty()
-  password: string;
+  password?: string;
+}
+
+export class UpdateBioDto {
+  @ApiProperty()
+  bio: string;
 }

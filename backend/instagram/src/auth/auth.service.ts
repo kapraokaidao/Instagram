@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/common";
 import { UserService } from "../user/user.service";
 import { User, UserDto } from "../model/user.model";
 import { compareSync } from "bcryptjs";
@@ -18,21 +18,22 @@ export class AuthService {
     return null;
   }
 
-  async login(credential: AuthCredentialsDto) {
+  async login(credential: AuthCredentialsDto): Promise<{ access_token: string }> {
     const user: UserDto = await this.validateUser(credential);
-    const { _id, ...userDto } = user;
-    const payload = { userId: _id, ...userDto };
+    if (!user) {
+      throw new UnauthorizedException("Wrong username or password");
+    }
     return {
-      access_token: this.jwtService.sign(payload),
+      access_token: this.jwtService.sign(user),
     };
   }
 
-  async register(user: User): Promise<UserDto> {
+  async register(user: User): Promise<{ access_token: string }> {
     const existedUser = await this.userService.findByUsername(user.username);
     if (existedUser) {
       throw new BadRequestException("Username already existed");
     }
     await this.userService.create(user);
-    return this.userService.findByUsername(user.username);
+    return this.login({ username: user.username, password: user.password });
   }
 }
