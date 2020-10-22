@@ -1,9 +1,11 @@
 # compiled output
 /dist
 /node_modules
+/.serverless
 
 # env
 .env
+secrets.yml
 
 # Logs
 logs

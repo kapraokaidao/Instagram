@@ -10,7 +10,7 @@ import configuration from "./config/configuration";
 @Module({
   imports: [
     ConfigModule.forRoot({
-      ignoreEnvFile: process.env.MODE === "production",
+      ignoreEnvFile: process.env.NODE_ENV === "production",
       load: [configuration],
       isGlobal: true,
     }),

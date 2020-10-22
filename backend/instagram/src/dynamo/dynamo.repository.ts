@@ -64,7 +64,7 @@ export class DynamoRepository<T> {
     return Items[0];
   }
 
-  async put(data: T): Promise<T> {
+  async put(data: T): Promise<boolean> {
     const params = {
       TableName: this.tableName,
       Item: {
@@ -72,6 +72,36 @@ export class DynamoRepository<T> {
         _id: uuidv4(),
       },
     };
-    return this.documentClient.put(params).promise();
+    await this.documentClient.put(params).promise();
+    return true;
+  }
+
+  async update(_id: string, data: T | any): Promise<boolean> {
+    const params = {
+      TableName: this.tableName,
+      Key: {
+        _id,
+      },
+      UpdateExpression: this.generateUpdateExpression(data),
+      ExpressionAttributeValues: this.generateUpdateAttributes(data),
+      ReturnValues: "UPDATED_NEW",
+    };
+    await this.documentClient.update(params).promise();
+    return true;
+  }
+
+  generateUpdateExpression(dto): string {
+    const keys = Object.keys(dto).filter(key => key !== "_id");
+    const expr = keys.map(key => ` ${key} = :${key}`);
+    return "set" + expr;
+  }
+
+  generateUpdateAttributes(dto) {
+    const keys = Object.keys(dto).filter(key => key !== "_id");
+    const attr = {};
+    keys.forEach(key => {
+      attr[`:${key}`] = dto[key];
+    });
+    return attr;
   }
 }
