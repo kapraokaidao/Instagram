@@ -47,7 +47,7 @@ import { Vue } from "vue-property-decorator";
 import Component from "vue-class-component";
 import { Action, namespace } from "vuex-class";
 import { AuthActions, SignUpCredentials } from "../types/auth";
-const authModule = namespace('auth')
+const authModule = namespace("auth");
 
 @Component
 export default class Signup extends Vue {
