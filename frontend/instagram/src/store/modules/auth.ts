@@ -28,7 +28,7 @@ const getters: GetterTree<AuthState, RootState> = {
 };
 
 const mutations: MutationTree<AuthState> = {
-  [AuthMutations.setToken]: (state, payload: {access_token: string}) => {
+  [AuthMutations.setToken]: (state, payload: { access_token: string }) => {
     state.token = payload.access_token;
   },
   [AuthMutations.setLoading]: (state, payload: boolean) => {
@@ -54,24 +54,12 @@ const actions: ActionTree<AuthState, any> = {
     commit(AuthMutations.setLoading, true);
     try {
       const response = await axios.post("/auth/login", payload);
-      if (response.status === 201) {
-        commit(AuthMutations.setToken, response.data);
-        dispatch(AuthActions.setAxiosHeader);
-        commit(AuthMutations.setError, false);
-        dispatch(AuthActions.redirect);
-      } else {
-        commit(AuthMutations.setError, true);
-      }
+      commit(AuthMutations.setToken, response.data);
+      await dispatch(AuthActions.setAxiosHeader);
+      router.push({ name: "Profile" })
     } catch (error) {
       commit(AuthMutations.setError, true);
-      if (error.toString().includes("401")) {
-        commit(AuthMutations.setErrorData, "username or password is wrong");
-      } else {
-        commit(
-          AuthMutations.setErrorData,
-          "something is wrong with the server"
-        );
-      }
+      commit(AuthMutations.setErrorData, error.response.message);
     }
     commit(AuthMutations.setLoading, false);
   },
@@ -80,50 +68,35 @@ const actions: ActionTree<AuthState, any> = {
     payload: SignUpCredentials
   ) => {
     commit(AuthMutations.setLoading, true);
-    let response;
     try {
-      response = await axios.post<string>("/auth/register", payload);
-      if (response.status === 201) {
-        commit(AuthMutations.setToken, response.data);
-        dispatch(AuthActions.setAxiosHeader);
-        commit(AuthMutations.setError, false);
-        dispatch(AuthActions.redirect);
-      } else {
-        throw new Error();
-      }
+      const response = await axios.post<string>("/auth/register", payload);
+      commit(AuthMutations.setToken, response.data);
+      commit(AuthMutations.setError, false);
+      await dispatch(AuthActions.setAxiosHeader);
+      router.push({ name: "Profile" })
     } catch (error) {
       commit(AuthMutations.setError, true);
-      if (error.toString().includes("400")) {
-        commit(AuthMutations.setErrorData, "username is already taken");
-      } else if (error.toString().includes("500")) {
-        commit(AuthMutations.setErrorData, "email is already taken");
-      } else {
-        commit(
-          AuthMutations.setErrorData,
-          "something is wrong with the server"
-        );
-      }
+      commit(AuthMutations.setErrorData, error.response.message);
     }
     commit(AuthMutations.setLoading, false);
   },
   [AuthActions.logout]: async ({ commit }) => {
-    commit(AuthMutations.setUser, null);
     commit(AuthMutations.setToken, null);
-    router.push("/login");
+    router.push({ name: "Login" });
   },
   [AuthActions.redirect]: async ({ commit }) => {
     const response = await axios.get<User>("/user/me");
     if (response.status === 200) {
       commit(AuthMutations.setUser, response.data);
-      router.push("/profile");
+      router.push({ name: "Profile" });
     } else {
       alert("token error")
     }
     commit(AuthMutations.setLoading, false);
   },
-  [AuthActions.VerifyToken]: async ({ state,commit,dispatch}) => {
+  [AuthActions.VerifyToken]: async ({ state, commit, dispatch }) => {
     try {
-      if(state.token) {
+      if (state.token) {
         await dispatch(AuthActions.setAxiosHeader)
         await dispatch(UserActions.fetchUser, {}, { root: true })
         // const response = await axios.get<User>("user/me");
@@ -131,14 +104,14 @@ const actions: ActionTree<AuthState, any> = {
       } else {
         await dispatch(AuthActions.logout)
       }
-    } catch(e){
+    } catch (e) {
       await dispatch(AuthActions.logout)
     }
   },
   [AuthActions.setAxiosHeader]: ({ state }) => {
     if (state.token) {
       axios.defaults.headers.common["Authorization"] = `Bearer ${state.token}`;
-    } 
+    }
   }
 };
 
