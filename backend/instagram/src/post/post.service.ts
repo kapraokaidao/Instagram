@@ -29,4 +29,20 @@ export class PostService {
     const posts = await this.postRepository.findByuserId(uid);
     return posts.sort((a, b) => b.updatedDate - a.updatedDate);
   }
+
+  async findOtherUserId(uid: string, limit: number) : Promise<PostModel[]> {
+    return this.postRepository.findOtheruserId(uid, limit);
+  }
+
+  async toggleLike(postId: string, uid: string) {
+    const post: PostModel = await this.postRepository.findById(postId);
+    let likeIds;
+    if(post.likedBy.includes(uid)) {
+      likeIds = post.likedBy.filter((id)=> id!= uid)
+    } else {
+      likeIds = post.likedBy
+      likeIds = likeIds.push(uid)
+    }
+    return this.postRepository.update(postId, { likeBy: likeIds})
+  }
 }

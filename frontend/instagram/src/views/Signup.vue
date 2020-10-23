@@ -31,7 +31,6 @@
             @click:append="showPassword2 = !showPassword2"
           ></v-text-field>
         </div>
-
         <div class="px-12 my-3">
           <v-btn block class="primary-btn" @click="submit">
             Register
