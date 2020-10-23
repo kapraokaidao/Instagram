@@ -24,7 +24,7 @@ const state: UserState = {
 };
 
 const getters: GetterTree<UserState, RootState> = {
-  [UserGetters.getUser]: state => state.user
+  // [UserGetters.getUsers]: state => state.user
 };
 
 const mutations: MutationTree<UserState> = {
