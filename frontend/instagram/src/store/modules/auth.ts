@@ -7,12 +7,11 @@ import {
   AuthGetters
 } from "@/types/auth";
 import { cloneDeep } from "lodash";
-import { User } from "@/types/user";
+import { User, UserActions } from "@/types/user";
 import { ActionTree, GetterTree, Module, MutationTree } from "vuex";
 import router from "../../router";
 import axios from "axios";
 import { RootState, rootState } from "@/store/modules/index";
-import Vue from 'vue'
 
 const state: AuthState = {
   ...cloneDeep(rootState),
@@ -113,8 +112,7 @@ const actions: ActionTree<AuthState, any> = {
     router.push("/login");
   },
   [AuthActions.redirect]: async ({ commit }) => {
-    const pathTogetUser = "/user/me";
-    const response = await axios.get<User>(pathTogetUser);
+    const response = await axios.get<User>("/user/me");
     if (response.status === 200) {
       commit(AuthMutations.setUser, response.data);
       router.push("/profile");
@@ -127,13 +125,14 @@ const actions: ActionTree<AuthState, any> = {
     try {
       if(state.token) {
         await dispatch(AuthActions.setAxiosHeader)
-        const response = await axios.get<User>("user/me");
-        commit(AuthMutations.setUser, response.data)
+        await dispatch(UserActions.fetchUser, {}, { root: true })
+        // const response = await axios.get<User>("user/me");
+        // commit(AuthMutations.setUser, response.data)
       } else {
-        dispatch(AuthActions.logout)
+        await dispatch(AuthActions.logout)
       }
     } catch(e){
-      dispatch(AuthActions.logout)
+      await dispatch(AuthActions.logout)
     }
   },
   [AuthActions.setAxiosHeader]: ({ state }) => {

@@ -6,13 +6,15 @@ import Home from "../views/Home.vue";
 import Profile from "../views/Profile.vue";
 import Upload from "../views/Upload.vue";
 import Follower from "../views/Follower.vue";
+import store from "@/store";
+
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
     path: "/",
-    name: "Login",
-    component: Login
+    name: "Home",
+    component: Home
   },
   {
     path: "/about",
@@ -40,11 +42,6 @@ const routes: Array<RouteConfig> = [
     component: UpdateProfile
   },
   {
-    path: "/home",
-    name: "Home",
-    component: Home
-  },
-  {
     path: "/profile",
     name: "Profile",
     component: Profile
@@ -65,6 +62,18 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  const state = store.state as any;
+  const isAuthenticated = !!state.auth.token;
+  if (to.name === "Signup" || to.name === "Login") {
+    if (isAuthenticated) next({ name: "Profile" });
+    else next();
+  } else {
+    if (isAuthenticated) next();
+    else next({ name: "Login" });
+  }
 });
 
 export default router;
