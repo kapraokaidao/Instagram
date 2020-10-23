@@ -12,6 +12,7 @@ import { ActionTree, GetterTree, Module, MutationTree } from "vuex";
 import router from "../../router";
 import axios from "axios";
 import { RootState, rootState } from "@/store/modules/index";
+import Vue from 'vue'
 
 const state: AuthState = {
   ...cloneDeep(rootState),
@@ -28,8 +29,8 @@ const getters: GetterTree<AuthState, RootState> = {
 };
 
 const mutations: MutationTree<AuthState> = {
-  [AuthMutations.setToken]: (state, payload: string) => {
-    state.token = payload;
+  [AuthMutations.setToken]: (state, payload: {access_token: string}) => {
+    state.token = payload.access_token;
   },
   [AuthMutations.setLoading]: (state, payload: boolean) => {
     state.isLoading = payload;
@@ -38,6 +39,7 @@ const mutations: MutationTree<AuthState> = {
     state.isError = payload;
   },
   [AuthMutations.setErrorData]: (state, payload: string) => {
+    alert(payload)
     state.errorData = payload;
   },
   [AuthMutations.setUser]: (state, payload: User) => {
@@ -52,7 +54,7 @@ const actions: ActionTree<AuthState, any> = {
   ) => {
     commit(AuthMutations.setLoading, true);
     try {
-      const response = await axios.post<string>("/auth/login", payload);
+      const response = await axios.post("/auth/login", payload);
       if (response.status === 201) {
         commit(AuthMutations.setToken, response.data);
         dispatch(AuthActions.setAxiosHeader);
@@ -92,7 +94,6 @@ const actions: ActionTree<AuthState, any> = {
       }
     } catch (error) {
       commit(AuthMutations.setError, true);
-
       if (error.toString().includes("400")) {
         commit(AuthMutations.setErrorData, "username is already taken");
       } else if (error.toString().includes("500")) {
@@ -117,6 +118,8 @@ const actions: ActionTree<AuthState, any> = {
     if (response.status === 200) {
       commit(AuthMutations.setUser, response.data);
       router.push("/profile");
+    } else {
+      alert("token error")
     }
     commit(AuthMutations.setLoading, false);
   },
