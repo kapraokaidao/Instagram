@@ -20,7 +20,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import { State, Action, namespace } from "vuex-class";
 import { User, UserActions } from "@/types/user";
-
+import router from "../router";
 const userModule = namespace("user");
 
 @Component
@@ -28,7 +28,8 @@ export default class UpdateProfile extends Vue {
   @userModule.State("user") private user!: User;
   @userModule.Action(UserActions.fetchUser) private fetchUser!: Function;
   @userModule.Action(UserActions.uploadImage) private uploadImage!: Function;
-  @userModule.Action(UserActions.updateProfile) private updateProfile!: Function;
+  @userModule.Action(UserActions.updateProfile)
+  private updateProfile!: Function;
 
   private editBio = "";
   private file: any = null;
@@ -49,6 +50,7 @@ export default class UpdateProfile extends Vue {
       this.uploadImage(formData);
     }
     this.updateProfile({ bio: this.editBio });
+    router.push("/profile");
   }
 }
 </script>

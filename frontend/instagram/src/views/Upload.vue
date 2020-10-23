@@ -99,7 +99,6 @@ export default {
   async mounted() {
     await this.$store.dispatch("user/fetchUser");
     const { username, imageUrl } = this.$store.state.user.user;
-    // const { username, imageUrl } = (await axios.get("/user/me")).data;
     this.username = username;
     this.imageUrl = imageUrl;
   }

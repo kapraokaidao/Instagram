@@ -50,7 +50,7 @@ const actions: ActionTree<UserState, RootState> = {
     }
   },
   [UserActions.uploadImage]: async ({ commit, dispatch }, formData) => {
-    console.log(formData)
+    console.log(formData);
     try {
       await axios.post("/user/me/image", formData);
       await dispatch(UserActions.fetchUser);
