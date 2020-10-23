@@ -29,6 +29,10 @@ export class PostService {
     return this.postRepository.findByuserId(uid);
   }
 
+  async findOtherUserId(uid: string) : Promise<PostModel[]> {
+    return this.postRepository.findOtheruserId(uid);
+  }
+
   async toggleLike(postId: string, uid: string) {
     const post: PostModel = await this.postRepository.findById(postId);
     let likeIds;

@@ -33,6 +33,11 @@ export class PostController {
     return this.postService.findByUserId(user._id);
   }
 
+  @Get("other")
+  async findOtherPost(@User() user: UserDto) : Promise<PostModel[]> {
+    return this.postService.findOtherUserId(user._id)
+  }
+
   @Get("user/:uid")
   async findByUserId(@Param("uid") userId: string): Promise<PostModel[]> {
     return this.postService.findByUserId(userId);
