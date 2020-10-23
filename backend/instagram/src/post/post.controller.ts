@@ -3,7 +3,7 @@ import { FileInterceptor } from "@nestjs/platform-express";
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { User } from "src/decorators/user.decorator";
 import { FileUploadDto } from "src/model/image.model";
-import { PostModel, UpdateCaptionDto } from "src/model/post.model";
+import { OtherPostDto, PostModel, UpdateCaptionDto } from "src/model/post.model";
 import { UserDto } from "src/model/user.model";
 import { S3Service } from "src/s3/s3.service";
 import { paginate } from "src/utils/pagination.utils";
@@ -33,9 +33,10 @@ export class PostController {
     return this.postService.findByUserId(user._id);
   }
 
-  @Get("other")
-  async findOtherPost(@User() user: UserDto) : Promise<PostModel[]> {
-    return this.postService.findOtherUserId(user._id)
+  @Get("other/:limit")
+  @ApiQuery({ name: "limit", schema: { type: "integer" }, required: true })
+  async findOtherPost(@User() user: UserDto, @Query('limit') limit: string) : Promise<PostModel[]> {
+    return this.postService.findOtherUserId(user._id, parseInt(limit))
   }
 
   @Get("user/:uid")
@@ -61,7 +62,7 @@ export class PostController {
   }
 
   @Post(":id/like")
-  toggleLike(@User() user: UserDto, @Param("id") id: string ): Promise<boolean> {
+  toggleLike(@User() user: UserDto, @Param("id") id: string ) {
     return this.postService.toggleLike( id, user._id);
   }
 }

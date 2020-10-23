@@ -27,3 +27,8 @@ export class PostDto {
   @ApiProperty()
   postId : string
 }
+
+export class OtherPostDto {
+  @ApiProperty()
+  limit: number
+}
