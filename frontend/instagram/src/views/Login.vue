@@ -38,16 +38,15 @@
 <script lang="ts">
 import { Vue } from "vue-property-decorator";
 import Component from "vue-class-component";
-import { Action,namespace } from "vuex-class";
+import { Action, namespace } from "vuex-class";
 import { AuthActions, LoginCredentials } from "../types/auth";
-const authModule = namespace('auth')
+const authModule = namespace("auth");
 @Component
 export default class Login extends Vue {
   @authModule.Action(AuthActions.login) private login!: (
     credential: LoginCredentials
   ) => void;
   // data
-  
   private username = "";
   private password = "";
   private imageUrl = "../assets/cat-background.jpg";
@@ -61,6 +60,7 @@ export default class Login extends Vue {
   }
 }
 </script>
+
 <style lang="scss">
 @import "./style.scss";
 .bg {
