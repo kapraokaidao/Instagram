@@ -35,13 +35,13 @@ export class PostService {
 
   async toggleLike(postId: string, uid: string) {
     const post: PostModel = await this.postRepository.findById(postId);
-    let likeIds;
+    let likeIds: string[];
     if(post.likedBy.includes(uid)) {
       likeIds = post.likedBy.filter((id)=> id!= uid)
     } else {
       likeIds = post.likedBy
-      likeIds = likeIds.push(uid)
+      likeIds.push(uid)
     }
-    return this.postRepository.update(postId, { likeBy: likeIds})
+    return this.postRepository.update(postId, {likes: likeIds.length, likedBy: likeIds})
   }
 }
