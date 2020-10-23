@@ -16,12 +16,10 @@ import { RootState, rootState } from "@/store/modules/index";
 const state: AuthState = {
   ...cloneDeep(rootState),
   token: null,
-  user: null
 };
 
 const getters: GetterTree<AuthState, RootState> = {
   [AuthGetters.isLogin]: state => !!state.token,
-  [AuthGetters.getUser]: state => state.user,
   [AuthGetters.isLoading]: state => state.isLoading,
   [AuthGetters.getError]: state => state.isError,
   [AuthGetters.getErrorData]: state => state.errorData
@@ -41,9 +39,6 @@ const mutations: MutationTree<AuthState> = {
     alert(payload)
     state.errorData = payload;
   },
-  [AuthMutations.setUser]: (state, payload: User) => {
-    state.user = payload;
-  }
 };
 
 const actions: ActionTree<AuthState, any> = {
@@ -82,6 +77,7 @@ const actions: ActionTree<AuthState, any> = {
   },
   [AuthActions.logout]: async ({ commit }) => {
     commit(AuthMutations.setToken, null);
+    alert("logout")
     router.push({ name: "Login" });
   },
   [AuthActions.redirect]: async ({ commit }) => {
@@ -98,9 +94,7 @@ const actions: ActionTree<AuthState, any> = {
     try {
       if (state.token) {
         await dispatch(AuthActions.setAxiosHeader)
-        await dispatch(UserActions.fetchUser, {}, { root: true })
-        // const response = await axios.get<User>("user/me");
-        // commit(AuthMutations.setUser, response.data)
+        await dispatch("user/" + UserActions.fetchUser, {}, { root: true })
       } else {
         await dispatch(AuthActions.logout)
       }

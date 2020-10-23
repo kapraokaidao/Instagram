@@ -3,7 +3,6 @@ import { RootState } from "@/store/modules";
 
 export interface AuthState extends RootState {
   token: string | null;
-  user: User | null;
 }
 
 export interface LoginCredentials {
