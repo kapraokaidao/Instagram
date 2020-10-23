@@ -3,6 +3,7 @@ import { Inject, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { PostModel } from "src/model/post.model";
 import { S3Service } from "src/s3/s3.service";
+import { UserDto } from "src/model/user.model";
 
 @Injectable()
 export class PostRepository extends DynamoRepository<PostModel> {
@@ -14,11 +15,12 @@ export class PostRepository extends DynamoRepository<PostModel> {
     super(configService, tableName);
   }
 
-  async createPost(userId: string, image) {
+  async createPost(user: UserDto, image) {
     const now = new Date();
     const post: PostModel = {
       _id: "",
-      _uid: userId,
+      _uid: user._id,
+      owner: user,
       caption: "",
       imageUrl: "",
       likes: 0,

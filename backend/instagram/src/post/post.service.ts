@@ -2,6 +2,7 @@ import { ForbiddenException, Injectable } from "@nestjs/common";
 import { PostModel, UpdateCaptionDto } from "src/model/post.model";
 import { S3Service } from "src/s3/s3.service";
 import { PostRepository } from "./post.repository";
+import { UserDto } from "../model/user.model";
 
 @Injectable()
 export class PostService {
@@ -13,8 +14,8 @@ export class PostService {
     return posts.sort((a, b) => b.updatedDate - a.updatedDate);
   }
 
-  async createPost(userId: string, image) {
-    return this.postRepository.createPost(userId, image);
+  async createPost(user: UserDto, image) {
+    return this.postRepository.createPost(user, image);
   }
 
   async updateCaption(postId: string, ownerId: string, data: UpdateCaptionDto): Promise<void> {

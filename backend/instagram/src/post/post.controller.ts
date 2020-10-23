@@ -52,7 +52,7 @@ export class PostController {
   @ApiBody({ type: FileUploadDto })
   @UseInterceptors(FileInterceptor("image"))
   async createPost(@User() user: UserDto, @UploadedFile() image) {
-    return this.postService.createPost(user._id, image);
+    return this.postService.createPost(user, image);
   }
 
   @Put(":id")
