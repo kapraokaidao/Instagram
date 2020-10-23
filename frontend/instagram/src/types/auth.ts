@@ -32,7 +32,6 @@ export enum AuthMutations {
   setErrorData = "setErrorData"
 }
 
-
 export enum AuthActions {
   login = "login",
   logout = "logout",

@@ -13,7 +13,7 @@ import { AuthActions, AuthGetters } from "./types/auth";
 import NavigationBar from "./components/NavigationBar.vue";
 import { Component, Vue } from "vue-property-decorator";
 import { Action, Getter, namespace } from "vuex-class";
-const authModule = namespace('auth')
+const authModule = namespace("auth");
 
 @Component({
   components: {
@@ -25,8 +25,8 @@ export default class App extends Vue {
   @authModule.Getter(AuthGetters.isLogin) private isLogin!: () => boolean;
   @authModule.Action(AuthActions.VerifyToken) private verifyToken!: () => void;
 
-  beforeMount(){
-    this.verifyToken()
+  beforeMount() {
+    this.verifyToken();
   }
 }
 </script>

@@ -9,7 +9,7 @@ Vue.use(Vuex);
 
 const vuexLocal = new VuexPersistence<AuthState>({
   storage: window.localStorage,
-  reducer: (state) => ({ auth: { token: (state as any).auth.token }})
+  reducer: state => ({ auth: { token: (state as any).auth.token } })
 });
 
 const store = new Vuex.Store({

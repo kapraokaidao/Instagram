@@ -38,7 +38,7 @@ const mutations: MutationTree<AuthState> = {
     state.isError = payload;
   },
   [AuthMutations.setErrorData]: (state, payload: string) => {
-    alert(payload)
+    alert(payload);
     state.errorData = payload;
   },
   [AuthMutations.setUser]: (state, payload: User) => {
@@ -56,7 +56,7 @@ const actions: ActionTree<AuthState, any> = {
       const response = await axios.post("/auth/login", payload);
       commit(AuthMutations.setToken, response.data);
       await dispatch(AuthActions.setAxiosHeader);
-      router.push({ name: "Profile" })
+      router.push({ name: "Profile" });
     } catch (error) {
       commit(AuthMutations.setError, true);
       commit(AuthMutations.setErrorData, error.response.message);
@@ -73,7 +73,7 @@ const actions: ActionTree<AuthState, any> = {
       commit(AuthMutations.setToken, response.data);
       commit(AuthMutations.setError, false);
       await dispatch(AuthActions.setAxiosHeader);
-      router.push({ name: "Profile" })
+      router.push({ name: "Profile" });
     } catch (error) {
       commit(AuthMutations.setError, true);
       commit(AuthMutations.setErrorData, error.response.message);
@@ -90,22 +90,22 @@ const actions: ActionTree<AuthState, any> = {
       commit(AuthMutations.setUser, response.data);
       router.push({ name: "Profile" });
     } else {
-      alert("token error")
+      alert("token error");
     }
     commit(AuthMutations.setLoading, false);
   },
   [AuthActions.VerifyToken]: async ({ state, commit, dispatch }) => {
     try {
       if (state.token) {
-        await dispatch(AuthActions.setAxiosHeader)
-        await dispatch(UserActions.fetchUser, {}, { root: true })
+        await dispatch(AuthActions.setAxiosHeader);
+        await dispatch(UserActions.fetchUser, {}, { root: true });
         // const response = await axios.get<User>("user/me");
         // commit(AuthMutations.setUser, response.data)
       } else {
-        await dispatch(AuthActions.logout)
+        await dispatch(AuthActions.logout);
       }
     } catch (e) {
-      await dispatch(AuthActions.logout)
+      await dispatch(AuthActions.logout);
     }
   },
   [AuthActions.setAxiosHeader]: ({ state }) => {

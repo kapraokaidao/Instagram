@@ -22,7 +22,7 @@ import axios from "axios";
 export default {
   name: "UpdateProfile",
   data: () => ({
-    bio: "",
+    bio: ""
   }),
   methods: {
     submit() {
@@ -34,10 +34,10 @@ export default {
       const formData = new FormData();
       formData.append("image", file);
       axios({
-        method: 'post',
-        url: '/user/me/image',
-        data: formData,
-      })
+        method: "post",
+        url: "/user/me/image",
+        data: formData
+      });
     }
   },
   async mounted() {
