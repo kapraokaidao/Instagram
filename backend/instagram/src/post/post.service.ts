@@ -26,6 +26,7 @@ export class PostService {
   }
 
   async findByUserId(uid: string): Promise<PostModel[]> {
-    return this.postRepository.findByuserId(uid);
+    const posts = await this.postRepository.findByuserId(uid);
+    return posts.sort((a, b) => b.updatedDate - a.updatedDate);
   }
 }
