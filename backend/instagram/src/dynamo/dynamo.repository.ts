@@ -38,12 +38,12 @@ export class DynamoRepository<T> {
 
   async findAll(): Promise<T[]> {
     const params = {
-      TableName: this.tableName
-    }
+      TableName: this.tableName,
+    };
     const result = await this.documentClient.scan(params).promise();
     if (!result) return [];
     const { Items } = result;
-    return Items; 
+    return Items;
   }
 
   async findById(value: string): Promise<T> {

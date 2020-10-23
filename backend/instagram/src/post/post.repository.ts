@@ -15,7 +15,7 @@ export class PostRepository extends DynamoRepository<PostModel> {
   }
 
   async createPost(userId: string, image) {
-    const now = new Date()
+    const now = new Date();
     const post: PostModel = {
       _id: "",
       _uid: userId,

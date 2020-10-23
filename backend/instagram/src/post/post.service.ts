@@ -10,7 +10,7 @@ export class PostService {
   async findAll(): Promise<PostModel[]> {
     const posts = await this.postRepository.findAll();
     // return posts;
-    return posts.sort((a,b) => (b.updatedDate - a.updatedDate));
+    return posts.sort((a, b) => b.updatedDate - a.updatedDate);
   }
 
   async createPost(userId: string, image) {
@@ -22,6 +22,6 @@ export class PostService {
     if (post._uid !== ownerId) {
       throw new ForbiddenException("You are not post owner");
     }
-    return this.postRepository.update(postId, { updatedDate: (new Date()).getTime() , ...data });
+    return this.postRepository.update(postId, { updatedDate: new Date().getTime(), ...data });
   }
 }
