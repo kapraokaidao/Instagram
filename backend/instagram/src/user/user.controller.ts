@@ -22,11 +22,11 @@ export class UserController {
     return this.userService.updateBio(user._id, bio);
   }
 
-  @Post("upload/image")
+  @Post("me/image")
   @UseInterceptors(FileInterceptor("file"))
   async uploadImage(@User() user: UserDto, @UploadedFile() file) {
-    const now = new Date();
-    const imageName = `user_${user._id}_${now.getTime()}`;
-    await this.s3Service.uploadImage(file, imageName);
+    const path = `user_${user._id}/profile/profile_image.jpg`;
+    const imageUrl = await this.s3Service.uploadImage(file, path);
+    return this.userService.updateImageUrl(user._id, imageUrl);
   }
 }

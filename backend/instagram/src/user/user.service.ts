@@ -29,11 +29,16 @@ export class UserService {
     return this.userRepository.update(userId, bio);
   }
 
+  async updateImageUrl(userId: string, imageUrl: string): Promise<boolean> {
+    return this.userRepository.update(userId, { imageUrl })
+  }
+
   toUserDto(user: User) {
     return {
       _id: user._id,
       username: user.username,
       bio: user.bio,
+      imageUrl: user.imageUrl
     };
   }
 }

@@ -8,6 +8,8 @@ export class UserDto {
 
   @ApiProperty()
   bio?: string;
+
+  imageUrl?: string;
 }
 
 export class User extends UserDto {
