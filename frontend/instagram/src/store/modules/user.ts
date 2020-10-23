@@ -42,23 +42,20 @@ const actions: ActionTree<UserState, RootState> = {
       await dispatch(AuthActions.logout, {}, { root: true });
     }
   },
-  [UserActions.updateProfile]: async (
-    { commit },
-    updatedProfile: Partial<User> | User
-  ) => {
+  [UserActions.updateProfile]: async ({ commit }, data: Partial<User>) => {
     try {
-      // Patch /user/:id/updateProfile
-      const response = await axios.patch(
-        `/user/${updatedProfile._id}/updateProfile`
-      );
-      if (response.status === 200) {
-        const responseData: User = response.data;
-        commit(AuthMutations.setUser, responseData);
-      } else {
-        // TODO show error updateProfile failed
-      }
-    } catch {
-      // TODO show error
+      await axios.put(`/user/me`, data);
+    } catch (e) {
+      console.error(e);
+    }
+  },
+  [UserActions.uploadImage]: async ({ commit, dispatch }, formData) => {
+    console.log(formData)
+    try {
+      await axios.post("/user/me/image", formData);
+      await dispatch(UserActions.fetchUser);
+    } catch (e) {
+      console.error(e);
     }
   }
 };

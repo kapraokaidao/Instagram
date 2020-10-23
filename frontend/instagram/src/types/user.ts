@@ -29,5 +29,6 @@ export enum UserActions {
   setFetching = "setFetching",
   setSuccess = "setSuccess",
   setError = "setError",
-  updateProfile = "updateProfile"
+  updateProfile = "updateProfile",
+  uploadImage = "uploadImage"
 }
