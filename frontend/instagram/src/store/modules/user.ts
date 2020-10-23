@@ -14,7 +14,7 @@ import {
 } from "vuex";
 
 import axios from "axios";
-import { AuthMutations } from "@/types/auth";
+import { AuthActions, AuthMutations } from "@/types/auth";
 import { RootState, rootState } from "@/store/modules/index";
 import { cloneDeep } from "lodash";
 
@@ -24,7 +24,7 @@ const state: UserState = {
 };
 
 const getters: GetterTree<UserState, RootState> = {
-  [UserGetters.getUser]: state => state.user
+  // [UserGetters.getUsers]: state => state.user
 };
 
 const mutations: MutationTree<UserState> = {
@@ -34,16 +34,12 @@ const mutations: MutationTree<UserState> = {
 };
 
 const actions: ActionTree<UserState, RootState> = {
-  [UserActions.fetchUser]: async ({ commit, getters }) => {
-    if (getters.getUser) {
-      try {
-        // Get /user
-        const response = await axios.get("/user");
-        const responseData: User = response.data;
-        commit(UserMutations.setUser, responseData);
-      } catch {
-        // TODO show error user fetching failed
-      }
+  [UserActions.fetchUser]: async ({ commit, dispatch }) => {
+    try {
+      const { data } = await axios.get("/user/me");
+      commit(UserMutations.setUser, data);
+    } catch {
+      await dispatch(AuthActions.logout, {}, { root: true });
     }
   },
   [UserActions.updateProfile]: async (
