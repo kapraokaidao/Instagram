@@ -1,8 +1,8 @@
-import { Body, Controller, Get, Post, Put, UploadedFile, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put, UploadedFile, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from "@nestjs/swagger";
 import { UserService } from "./user.service";
 import { User } from "../decorators/user.decorator";
-import { UpdateBioDto, UserDto } from "../model/user.model";
+import { GetMultipleDto, UpdateBioDto, UserDto } from "../model/user.model";
 import { FileUploadDto } from "../model/image.model";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { S3Service } from "src/s3/s3.service";
@@ -21,6 +21,16 @@ export class UserController {
   @Put("me")
   updateUser(@User() user: UserDto, @Body() bio: UpdateBioDto): Promise<boolean> {
     return this.userService.updateBio(user._id, bio);
+  }
+
+  @Get(":id")
+  async findById(@Param(":id") id: string): Promise<UserDto> {
+    return this.userService.findById(id);
+  }
+
+  @Post("multiple")
+  async findMultiple(@Body() body: GetMultipleDto): Promise<UserDto[]> {
+    return this.userService.findMultiple(body.ids);
   }
 
   @Post("me/image")

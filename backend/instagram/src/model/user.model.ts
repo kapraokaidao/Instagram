@@ -21,3 +21,8 @@ export class UpdateBioDto {
   @ApiProperty()
   bio: string;
 }
+
+export class GetMultipleDto {
+  @ApiProperty()
+  ids: string[];
+}

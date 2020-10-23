@@ -16,6 +16,20 @@ export class UserService {
     return this.userRepository.findByUsername(username);
   }
 
+  async findMultiple(ids: string[]): Promise<UserDto[]> {
+    const users = await Promise.all(
+      ids.map(async id => {
+        try {
+          const user = await this.findById(id);
+          return user;
+        } catch (e) {
+          return null;
+        }
+      })
+    );
+    return users.filter(user => user !== null);
+  }
+
   async getUserWithPassword(username: string): Promise<UserModel> {
     return this.userRepository.getUserWithPassword(username);
   }
