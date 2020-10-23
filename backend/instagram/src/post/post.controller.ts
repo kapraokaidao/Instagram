@@ -33,10 +33,13 @@ export class PostController {
     return this.postService.findByUserId(user._id);
   }
 
-  @Get("other/:limit")
+  @Get("other")
   @ApiQuery({ name: "limit", schema: { type: "integer" }, required: true })
   async findOtherPost(@User() user: UserDto, @Query('limit') limit: string) : Promise<PostModel[]> {
-    return this.postService.findOtherUserId(user._id, parseInt(limit))
+    if (limit) {
+      return this.postService.findOtherUserId(user._id, parseInt(limit))
+    }
+    return this.postService.findOtherUserId(user._id, 1000)
   }
 
   @Get("user/:uid")

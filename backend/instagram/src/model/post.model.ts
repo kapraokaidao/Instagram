@@ -22,13 +22,3 @@ export class UpdateCaptionDto {
   @ApiProperty()
   caption: string;
 }
-
-export class PostDto {
-  @ApiProperty()
-  postId : string
-}
-
-export class OtherPostDto {
-  @ApiProperty()
-  limit: number
-}
