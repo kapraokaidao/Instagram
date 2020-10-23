@@ -14,18 +14,18 @@
           <v-row class="px-3" no-gutters>
             <h3>{{ user.name }}</h3>
           </v-row>
-          <v-row class="px-3 col-12" justify="center" no-gutters>
+          <v-row class="px-3 col-12" no-gutters>
             <v-col class="col-4 pa-0" align-self="center"
-              ><h5 class="h5-first-child">{{ user.postCount }} Posts</h5></v-col
+              ><h5 class="h5-first-child">{{ images.length }} Posts</h5></v-col
             >
-            <v-col class="col-4 pa-0" align-self="center"
+            <!-- <v-col class="col-4 pa-0" align-self="center"
               ><h5>{{ user.followerCount }} Followers</h5></v-col
             >
             <v-col class="col-4 pa-0" align-self="center"
               ><h5 class="h5-last-child">
                 {{ user.followingCount }} Followings
               </h5></v-col
-            >
+            > -->
           </v-row>
           <v-row no-gutters>
             <v-col>
@@ -51,70 +51,62 @@
           :key="img.id"
           class="col-md-3 col-sm-4 col-xl-2 col-12"
         >
-          <v-img aspect-ratio="1" :src="img.src"></v-img>
+          <v-card @click="selectImage(img.imageUrl, img.caption)">
+            <v-img aspect-ratio="1" :src="img.imageUrl"></v-img>
+          </v-card>
         </v-col>
       </v-row>
     </div>
+    <v-dialog v-model="dialog" max-width="640">
+      <v-card>
+        <v-card-title class="headline">
+          <v-img :src="selectedUrl"></v-img>
+        </v-card-title>
+        <v-card-text>
+          {{selectedCaption}}
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "Profile",
   data: () => ({
-    username: "",
-    showPassword1: false,
-    showPassword2: false,
-    password1: "",
-    password2: "",
-    rules: {
-      required: value => !!value || "Required.",
-      min: v => v.length >= 8 || "Min 8 characters",
-      emailMatch: () => "The email and password you entered don't match"
-    },
     imagex: "./public/cat-background.jpg",
     imgfs: ["./public/cat-background.jpg", "./public/cat-background.jpg"],
     userUrl:
       "https://64.media.tumblr.com/2256c172b8d646fb99eb525e3db3a7bd/tumblr_puth3breAF1u87abko1_500.jpg",
-
-    images: [
-      {
-        id: "01",
-        src:
-          "https://i.pinimg.com/736x/97/87/57/9787579f9b41fbce7c834954fedc0415.jpg"
-      },
-      {
-        id: "02",
-        src:
-          "https://i.pinimg.com/736x/1f/5b/8d/1f5b8d7c56e12ce4565fb18d7c69285a.jpg"
-      },
-      {
-        id: "03",
-        src:
-          "https://aesthetic.clueforlife.com/wp-content/uploads/2020/08/lofi-art-aesthetic.jpg"
-      },
-      {
-        id: "04",
-        src:
-          "https://i.pinimg.com/736x/37/c6/ae/37c6ae455e5d08b70fba422c5cf69713.jpg"
-      },
-      {
-        id: "05",
-        src:
-          "https://i.pinimg.com/originals/9a/a1/50/9aa150ac5fc1b155250aa7fd7d373a53.jpg"
-      }
-    ],
+    images: [],
     user: {
       name: "Krit Kruaykitanon",
       postCount: "5",
       followerCount: "169",
       followingCount: "42"
-    }
+    },
+    dialog: false,
+    selectedUrl: "",
+    selectedCaption: "",
   }),
   methods: {
     getImgUrl(pic) {
       return require("../assets/" + pic);
+    },
+    selectImage(imageUrl, caption){
+      this.selectedUrl = imageUrl
+      this.selectedCaption = caption
+      this.dialog = true
     }
+  },
+  async mounted() {
+    const response = (await axios({
+      method: "get",
+      url: "/post/me"
+    })).data
+    this.images = response
   }
 };
 </script>
