@@ -47,7 +47,7 @@ import { Vue } from "vue-property-decorator";
 import Component from "vue-class-component";
 import { Action, namespace } from "vuex-class";
 import { AuthActions, SignUpCredentials } from "../types/auth";
-const authModule = namespace('auth')
+const authModule = namespace("auth");
 
 @Component
 export default class Signup extends Vue {
@@ -60,8 +60,8 @@ export default class Signup extends Vue {
   private password1 = "";
   private password2 = "";
   private rules = {
-    required: value => !!value || "Required.",
-    min: v => v.length >= 8 || "Min 8 characters",
+    required: (value: any) => !!value || "Required.",
+    min: (v: any) => v.length >= 8 || "Min 8 characters",
     emailMatch: () => "The email and password you entered don't match"
   };
 
