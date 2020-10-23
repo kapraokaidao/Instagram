@@ -35,7 +35,7 @@ export class PostRepository extends DynamoRepository<PostModel> {
 
   async findByuserId(userId: string): Promise<PostModel[]> {
     const params = {
-      tableName: this.tableName,
+      TableName: this.tableName,
       FilterExpression: "#uid = :uid",
       ExpressionAttributeNames: {
         "#uid": "_uid",
@@ -44,7 +44,7 @@ export class PostRepository extends DynamoRepository<PostModel> {
         ":uid": userId,
       },
     };
-    const result = await this.documentClient.scan(params);
+    const result = await this.documentClient.scan(params).promise();
     if (!result) return [];
     const { Items } = result;
     return Items;
