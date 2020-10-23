@@ -1,9 +1,9 @@
-import { Body, Controller, Param, Post, Put, UploadedFile, UseInterceptors, Get, Query } from "@nestjs/common";
+import { Body, Controller, Param, Post, Put, UploadedFile, UseInterceptors, Get, Query, Patch } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { User } from "src/decorators/user.decorator";
 import { FileUploadDto } from "src/model/image.model";
-import { PostModel, UpdateCaptionDto } from "src/model/post.model";
+import { OtherPostDto, PostModel, UpdateCaptionDto } from "src/model/post.model";
 import { UserDto } from "src/model/user.model";
 import { S3Service } from "src/s3/s3.service";
 import { paginate } from "src/utils/pagination.utils";
@@ -33,6 +33,15 @@ export class PostController {
     return this.postService.findByUserId(user._id);
   }
 
+  @Get("other")
+  @ApiQuery({ name: "limit", schema: { type: "integer" }, required: true })
+  async findOtherPost(@User() user: UserDto, @Query('limit') limit: string) : Promise<PostModel[]> {
+    if (limit) {
+      return this.postService.findOtherUserId(user._id, parseInt(limit))
+    }
+    return this.postService.findOtherUserId(user._id, 1000)
+  }
+
   @Get("user/:uid")
   async findByUserId(@Param("uid") userId: string): Promise<PostModel[]> {
     return this.postService.findByUserId(userId);
@@ -43,7 +52,7 @@ export class PostController {
   @ApiBody({ type: FileUploadDto })
   @UseInterceptors(FileInterceptor("image"))
   async createPost(@User() user: UserDto, @UploadedFile() image) {
-    return this.postService.createPost(user._id, image);
+    return this.postService.createPost(user, image);
   }
 
   @Put(":id")
@@ -53,5 +62,10 @@ export class PostController {
     @Body() body: UpdateCaptionDto
   ): Promise<void> {
     this.postService.updateCaption(postId, user._id, body);
+  }
+
+  @Post(":id/like")
+  toggleLike(@User() user: UserDto, @Param("id") id: string ) {
+    return this.postService.toggleLike( id, user._id);
   }
 }

@@ -1,9 +1,12 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { UserDto } from "./user.model";
 
 export class PostModel {
   _id: string; // post id
 
   _uid: string; // user id , owner of post
+
+  owner: UserDto;
 
   caption: string; // changable
 
