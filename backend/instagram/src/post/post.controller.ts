@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Post, Put, UploadedFile, UseInterceptors, Get, Query } from "@nestjs/common";
+import { Body, Controller, Param, Post, Put, UploadedFile, UseInterceptors, Get, Query, Patch } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { User } from "src/decorators/user.decorator";
@@ -53,5 +53,10 @@ export class PostController {
     @Body() body: UpdateCaptionDto
   ): Promise<boolean> {
     return this.postService.updateCaption(postId, user._id, body);
+  }
+
+  @Post(":id/like")
+  toggleLike(@User() user: UserDto, @Param("id") id: string ): Promise<boolean> {
+    return this.postService.toggleLike( id, user._id);
   }
 }

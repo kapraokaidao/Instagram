@@ -1,11 +1,10 @@
 import { Module } from "@nestjs/common";
-import { InteractionController } from "./interaction.controller";
+import { CommentController } from "./comment.controller";
 import { PostService } from "../post/post.service";
 
 @Module({
-  controllers: [InteractionController],
+  controllers: [CommentController],
   providers: [
-    PostService,
   ],
 })
 export class PostModule {}

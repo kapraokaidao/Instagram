@@ -7,13 +7,8 @@ import { PostService } from "src/post/post.service";
 import { UserDto } from "src/model/user.model";
 
 @ApiBearerAuth()
-@ApiTags("Interaction")
-@Controller("interaction")
-export class InteractionController {
+@ApiTags("Comment")
+@Controller("comment")
+export class CommentController {
   constructor(private readonly postService: PostService, private readonly s3Service: S3Service) {}
-
-  @Patch("like")
-  toggleLike(@User() user: UserDto, @Body() post: PostDto ): Promise<boolean> {
-    return this.postService.toggleLike( post.postId, user._id);
-  }
 }
