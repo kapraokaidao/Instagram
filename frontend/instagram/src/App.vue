@@ -9,10 +9,11 @@
 
 <script lang="ts">
 import HelloWorld from "./components/HelloWorld.vue";
-import { AuthGetters } from "./types/auth";
+import { AuthActions, AuthGetters } from "./types/auth";
 import NavigationBar from "./components/NavigationBar.vue";
 import { Component, Vue } from "vue-property-decorator";
-import { Getter } from "vuex-class";
+import { Action, Getter, namespace } from "vuex-class";
+const authModule = namespace("auth");
 
 @Component({
   components: {
@@ -21,7 +22,12 @@ import { Getter } from "vuex-class";
   }
 })
 export default class App extends Vue {
-  @Getter(AuthGetters.isLogin) private isLogin!: () => boolean;
+  @authModule.Getter(AuthGetters.isLogin) private isLogin!: () => boolean;
+  @authModule.Action(AuthActions.VerifyToken) private verifyToken!: () => void;
+
+  beforeMount() {
+    this.verifyToken();
+  }
 }
 </script>
 <style lang="scss">

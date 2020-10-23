@@ -11,19 +11,17 @@
         <div class="px-12">
           <v-text-field
             v-model="username"
-            :error-messages="usernameError"
             label="Username"
             required
           ></v-text-field>
           <v-text-field
             v-model="password"
-            :error-messages="passwordError"
             label="Password"
             required
           ></v-text-field>
         </div>
         <div class="px-12 my-3">
-          <v-btn block class="secondary-btn" @click="login" to="/">
+          <v-btn block class="secondary-btn" @click="submit" to="/">
             Login
           </v-btn>
         </div>
@@ -40,12 +38,12 @@
 <script lang="ts">
 import { Vue } from "vue-property-decorator";
 import Component from "vue-class-component";
-import { Action } from "vuex-class";
+import { Action, namespace } from "vuex-class";
 import { AuthActions, LoginCredentials } from "../types/auth";
-
+const authModule = namespace("auth");
 @Component
 export default class Login extends Vue {
-  @Action(AuthActions.login) private login!: (
+  @authModule.Action(AuthActions.login) private login!: (
     credential: LoginCredentials
   ) => void;
   // data
@@ -62,6 +60,7 @@ export default class Login extends Vue {
   }
 }
 </script>
+
 <style lang="scss">
 @import "./style.scss";
 .bg {

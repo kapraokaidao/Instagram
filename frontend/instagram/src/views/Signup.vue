@@ -32,7 +32,7 @@
           ></v-text-field>
         </div>
         <div class="px-12 my-3">
-          <v-btn block class="primary-btn" @click="submit" to="/">
+          <v-btn block class="primary-btn" @click="submit">
             Register
           </v-btn>
         </div>
@@ -44,23 +44,23 @@
 <script lang="ts">
 import { Vue } from "vue-property-decorator";
 import Component from "vue-class-component";
-import { Action } from "vuex-class";
+import { Action, namespace } from "vuex-class";
 import { AuthActions, SignUpCredentials } from "../types/auth";
+const authModule = namespace("auth");
 
 @Component
 export default class Signup extends Vue {
-  @Action(AuthActions.signUp) private signUp!: (
-    credentials: SignUpCredentials
+  @authModule.Action(AuthActions.signUp) private signUp!: (
+    credential: SignUpCredentials
   ) => void;
-
   private username = "";
   private showPassword1 = false;
   private showPassword2 = false;
   private password1 = "";
   private password2 = "";
   private rules = {
-    required: value => !!value || "Required.",
-    min: v => v.length >= 8 || "Min 8 characters",
+    required: (value: any) => !!value || "Required.",
+    min: (v: { length: number }) => v.length >= 8 || "Min 8 characters",
     emailMatch: () => "The email and password you entered don't match"
   };
 

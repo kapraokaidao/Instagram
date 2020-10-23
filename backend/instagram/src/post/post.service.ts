@@ -17,12 +17,12 @@ export class PostService {
     return this.postRepository.createPost(userId, image);
   }
 
-  async updateCaption(postId: string, ownerId: string, data: UpdateCaptionDto): Promise<boolean> {
+  async updateCaption(postId: string, ownerId: string, data: UpdateCaptionDto): Promise<void> {
     const post = await this.postRepository.findById(postId);
     if (post._uid !== ownerId) {
       throw new ForbiddenException("You are not post owner");
     }
-    return this.postRepository.update(postId, { updatedDate: new Date().getTime(), ...data });
+    this.postRepository.update(postId, { updatedDate: new Date().getTime(), ...data });
   }
 
   async findByUserId(uid: string): Promise<PostModel[]> {

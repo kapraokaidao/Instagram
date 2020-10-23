@@ -19,8 +19,8 @@ export class UserController {
   }
 
   @Put("me")
-  updateUser(@User() user: UserDto, @Body() bio: UpdateBioDto): Promise<boolean> {
-    return this.userService.updateBio(user._id, bio);
+  async updateUser(@User() user: UserDto, @Body() bio: UpdateBioDto): Promise<void> {
+    this.userService.updateBio(user._id, bio);
   }
 
   @Get(":id")

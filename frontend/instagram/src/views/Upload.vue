@@ -12,69 +12,95 @@
               accept="image/png, image/jpeg, image/bmp"
               placeholder="Select your image"
               prepend-icon="mdi-camera"
+              @change="upload"
             ></v-file-input>
           </v-col>
         </v-row>
-        <v-row class="home-img-container my-4" no-gutters justify="center">
-          <v-col class="home-img col-4" align-self="center">
-            <v-img aspect-ratio="1" src="../assets/cat-background.jpg"></v-img>
-          </v-col>
-          <v-col class="home-img-info col-4">
-            <v-row class="home-img-info-profile pt-6" no-gutters>
-              <v-col align-self="center" class="offset-1 col-1">
-                <v-avatar>
-                  <v-img
-                    src="../assets/cat-background.jpg"
-                    alt="Krit Kruaykitanon"
-                  />
-                </v-avatar>
-              </v-col>
-              <v-col align-self="center" class="offset-1">
-                <v-row no-gutters>
-                  <h3>Krit Kruaykitanon</h3>
-                </v-row>
-                <v-row no-gutters>
-                  <h5>2h</h5>
-                </v-row>
-              </v-col>
-            </v-row>
-            <v-row class="img-caption pt-16" no-gutters justify="center">
-              <v-col class="col-6" align-self="center">
-                <p>
-                  Give me some cookie!
-                </p>
-              </v-col>
-            </v-row>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col class="col-4 offset-6">
-            <v-btn class="primary-btn my-2" block @click="submit" to="/home">
-              Post
-            </v-btn>
-          </v-col>
-        </v-row>
+        <div v-if="postId">
+          <v-row class="home-img-container my-4" no-gutters justify="center">
+            <v-col class="home-img col-4" align-self="center">
+              <v-img aspect-ratio="1" :src="postUrl"></v-img>
+            </v-col>
+            <v-col class="home-img-info col-4">
+              <v-row class="home-img-info-profile pt-6" no-gutters>
+                <v-col align-self="center" class="offset-1 col-1">
+                  <v-avatar>
+                    <v-img :src="imageUrl" alt="Krit Kruaykitanon" />
+                  </v-avatar>
+                </v-col>
+                <v-col align-self="center" class="offset-1">
+                  <v-row no-gutters>
+                    <h3>{{ username }}</h3>
+                  </v-row>
+                  <v-row no-gutters>
+                    <h5>2h</h5>
+                  </v-row>
+                </v-col>
+              </v-row>
+              <v-row class="img-caption px-8 py-2" no-gutters justify="center">
+                <v-textarea
+                  flat
+                  auto-grow
+                  name="caption"
+                  label="caption"
+                  v-model="caption"
+                ></v-textarea>
+              </v-row>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col class="col-4 offset-6">
+              <v-btn class="primary-btn my-2" block @click="submit">
+                Post
+              </v-btn>
+            </v-col>
+          </v-row>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+import router from "../router";
 export default {
   name: "Upload",
   data: () => ({
     username: "",
-    showPassword1: false,
-    showPassword2: false,
-    password1: "",
-    password2: "",
-    rules: {
-      required: value => !!value || "Required.",
-      min: v => v.length >= 8 || "Min 8 characters",
-      emailMatch: () => "The email and password you entered don't match"
-    }
+    imageUrl: "",
+    postUrl: "",
+    postId: "",
+    caption: ""
   }),
-  methods: {}
+  methods: {
+    async upload(file) {
+      const formData = new FormData();
+      formData.append("image", file);
+      const { imageUrl, _id } = (
+        await axios({
+          method: "post",
+          url: "/post",
+          data: formData
+        })
+      ).data;
+      this.postUrl = imageUrl;
+      this.postId = _id;
+    },
+    async submit() {
+      await axios({
+        method: "put",
+        url: `/post/${this.postId}`,
+        data: { caption: this.caption }
+      });
+      router.push("/profile");
+    }
+  },
+  async mounted() {
+    const { username, imageUrl } = (await axios.get("/user/me")).data;
+    this.username = username;
+    this.imageUrl = imageUrl;
+  }
 };
 </script>
 

@@ -3,7 +3,6 @@ import { RootState } from "@/store/modules";
 
 export interface AuthState extends RootState {
   token: string | null;
-  user: User | null;
 }
 
 export interface LoginCredentials {
@@ -38,5 +37,6 @@ export enum AuthActions {
   signUp = "signUp",
   redirect = "redirect",
   setAxiosHeader = "setAxiosHeader",
-  protectedRedirect = "protectedRedirect"
+  protectedRedirect = "protectedRedirect",
+  VerifyToken = "VerifyToken"
 }
