@@ -14,16 +14,16 @@ import { Page } from "../utils/pagination.utils";
 @ApiBearerAuth()
 @Controller("post")
 export class PostController {
-  private pageSize = 20;
-
   constructor(private readonly postService: PostService, private readonly s3Service: S3Service) {}
 
   @Get()
   @ApiQuery({ name: "page", schema: { type: "integer" }, required: false })
-  async getPosts(@Query("page") page: string): Promise<Page<PostModel>> {
+  @ApiQuery({ name: "pageSize", schema: { type: "integer" }, required: false })
+  async getPosts(@Query("page") page: string, @Query("pageSize") pageSize: string): Promise<Page<PostModel>> {
     const posts = await this.postService.findAll();
     if (page) {
-      return paginate(posts, parseInt(page), this.pageSize);
+      const size = pageSize ? parseInt(pageSize) : 20;
+      return paginate(posts, parseInt(page), size);
     }
     return paginate(posts, 1, posts.length);
   }
