@@ -1,8 +1,9 @@
 import { Body, Controller, Get, Post, Put, UploadedFile, UseInterceptors } from "@nestjs/common";
-import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from "@nestjs/swagger";
 import { UserService } from "./user.service";
 import { User } from "../decorators/user.decorator";
 import { UpdateBioDto, UserDto } from "../model/user.model";
+import { FileUploadDto } from "../model/image.model";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { S3Service } from "src/s3/s3.service";
 
@@ -23,10 +24,12 @@ export class UserController {
   }
 
   @Post("me/image")
-  @UseInterceptors(FileInterceptor("file"))
-  async uploadImage(@User() user: UserDto, @UploadedFile() file) {
+  @ApiConsumes("multipart/form-data")
+  @ApiBody({ type: FileUploadDto })
+  @UseInterceptors(FileInterceptor("image"))
+  async uploadImage(@User() user: UserDto, @UploadedFile() image) {
     const path = `user_${user._id}/profile/profile_image.jpg`;
-    const imageUrl = await this.s3Service.uploadImage(file, path);
+    const imageUrl = await this.s3Service.uploadImage(image, path);
     return this.userService.updateImageUrl(user._id, imageUrl);
   }
 }

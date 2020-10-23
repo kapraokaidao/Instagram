@@ -64,16 +64,18 @@ export class DynamoRepository<T> {
     return Items[0];
   }
 
-  async put(data: T): Promise<boolean> {
+  async put(data: T): Promise<T> {
+    const itemId = uuidv4();
     const params = {
       TableName: this.tableName,
       Item: {
         ...data,
-        _id: uuidv4(),
+        _id: itemId,
       },
     };
     await this.documentClient.put(params).promise();
-    return true;
+    const newItem = await this.findById(itemId);
+    return newItem;
   }
 
   async update(_id: string, data: T | any): Promise<boolean> {

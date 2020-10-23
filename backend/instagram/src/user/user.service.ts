@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { UpdateBioDto, User, UserDto } from "../model/user.model";
+import { UpdateBioDto, UserModel, UserDto } from "../model/user.model";
 import { UserRepository } from "./user.repository";
 import { hashSync } from "bcryptjs";
 
@@ -16,13 +16,14 @@ export class UserService {
     return this.userRepository.findByUsername(username);
   }
 
-  async getUserWithPassword(username: string): Promise<User> {
+  async getUserWithPassword(username: string): Promise<UserModel> {
     return this.userRepository.getUserWithPassword(username);
   }
 
-  async create({ password, ...userDto }: User): Promise<boolean> {
+  async create({ password, ...userDto }: UserModel): Promise<UserDto> {
     password = hashSync(password, 12);
-    return this.userRepository.put({ ...userDto, password });
+    const newUser = await this.userRepository.put({ ...userDto, password });
+    return this.toUserDto(newUser);
   }
 
   async updateBio(userId: string, bio: UpdateBioDto): Promise<boolean> {
@@ -30,15 +31,15 @@ export class UserService {
   }
 
   async updateImageUrl(userId: string, imageUrl: string): Promise<boolean> {
-    return this.userRepository.update(userId, { imageUrl })
+    return this.userRepository.update(userId, { imageUrl });
   }
 
-  toUserDto(user: User) {
+  toUserDto(user: UserModel) {
     return {
       _id: user._id,
       username: user.username,
       bio: user.bio,
-      imageUrl: user.imageUrl
+      imageUrl: user.imageUrl,
     };
   }
 }

@@ -1,0 +1,21 @@
+import { ForbiddenException, Injectable } from "@nestjs/common";
+import { PostModel, UpdateCaptionDto } from "src/model/post.model";
+import { S3Service } from "src/s3/s3.service";
+import { PostRepository } from "./post.repository";
+
+@Injectable()
+export class PostService {
+  constructor(private readonly postRepository: PostRepository, private readonly s3Service: S3Service) {}
+
+  async createPost(userId: string, image) {
+    return this.postRepository.createPost(userId, image);
+  }
+
+  async updateCaption(postId: string, ownerId: string, data: UpdateCaptionDto): Promise<boolean> {
+    const post = await this.postRepository.findById(postId);
+    if (post._uid !== ownerId) {
+      throw new ForbiddenException("You are not post owner");
+    }
+    return this.postRepository.update(postId, data);
+  }
+}

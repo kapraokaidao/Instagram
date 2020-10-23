@@ -1,10 +1,10 @@
 import { DynamoRepository } from "../dynamo/dynamo.repository";
-import { User, UserDto } from "../model/user.model";
+import { UserModel, UserDto } from "../model/user.model";
 import { Inject, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 
 @Injectable()
-export class UserRepository extends DynamoRepository<User> {
+export class UserRepository extends DynamoRepository<UserModel> {
   constructor(
     configService: ConfigService,
     @Inject("tableName") tableName: string
@@ -21,7 +21,7 @@ export class UserRepository extends DynamoRepository<User> {
     return user;
   }
 
-  async getUserWithPassword(username: string): Promise<User> {
+  async getUserWithPassword(username: string): Promise<UserModel> {
     return this.findOneBySingleField("username", username);
   }
 }

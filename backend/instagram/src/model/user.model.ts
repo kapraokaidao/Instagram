@@ -12,7 +12,7 @@ export class UserDto {
   imageUrl?: string;
 }
 
-export class User extends UserDto {
+export class UserModel extends UserDto {
   @ApiProperty()
   password?: string;
 }

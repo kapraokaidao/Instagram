@@ -1,7 +1,7 @@
 import { Body, Controller, Post, Request } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { AuthService } from "./auth.service";
-import { User } from "../model/user.model";
+import { UserModel } from "../model/user.model";
 import { AuthCredentialsDto } from "./auth.dto";
 import { PublicAPI } from "../decorators/public-api.decorator";
 
@@ -17,7 +17,7 @@ export class AuthController {
   }
 
   @Post("register")
-  async register(@Body() user: User) {
+  async register(@Body() user: UserModel) {
     return this.authService.register(user);
   }
 }

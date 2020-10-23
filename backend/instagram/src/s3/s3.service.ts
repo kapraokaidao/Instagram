@@ -5,9 +5,11 @@ import * as AWS from "aws-sdk";
 
 @Injectable()
 export class S3Service {
-  private readonly s3;
+  private s3;
 
-  constructor(private configService: ConfigService) {
+  constructor(private configService: ConfigService) {}
+
+  initS3() {
     const options: ServiceConfigurationOptions = {
       region: this.configService.get<string>("s3.region"),
       endpoint: this.configService.get<string>("s3.endpoint"),
@@ -16,13 +18,13 @@ export class S3Service {
     };
     AWS.config.update(options);
     this.s3 = new AWS.S3();
-    console.log(this.s3);
   }
 
-  async uploadImage(file, name) {
+  async uploadImage(file, path): Promise<string> {
+    this.initS3();
     const params = {
       Bucket: "ig-image",
-      Key: name,
+      Key: path,
       Body: file.buffer,
     };
     const { Location } = await this.s3.upload(params).promise();
