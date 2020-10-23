@@ -51,7 +51,7 @@ export class PostController {
     @Param("id") postId: string,
     @User() user: UserDto,
     @Body() body: UpdateCaptionDto
-  ): Promise<boolean> {
-    return this.postService.updateCaption(postId, user._id, body);
+  ): Promise<void> {
+    this.postService.updateCaption(postId, user._id, body);
   }
 }

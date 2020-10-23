@@ -40,12 +40,12 @@ export class UserService {
     return this.toUserDto(newUser);
   }
 
-  async updateBio(userId: string, bio: UpdateBioDto): Promise<boolean> {
-    return this.userRepository.update(userId, bio);
+  async updateBio(userId: string, bio: UpdateBioDto): Promise<void> {
+    this.userRepository.update(userId, bio);
   }
 
-  async updateImageUrl(userId: string, imageUrl: string): Promise<boolean> {
-    return this.userRepository.update(userId, { imageUrl });
+  async updateImageUrl(userId: string, imageUrl: string): Promise<void> {
+    this.userRepository.update(userId, { imageUrl });
   }
 
   toUserDto(user: UserModel) {
