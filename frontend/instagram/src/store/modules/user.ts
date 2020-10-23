@@ -76,9 +76,3 @@ const UserModule: Module<UserState, RootState> = {
 };
 
 export default UserModule;
-
-// to get state in store
-// this.$store.state.search.transcribeMessage;
-
-// to dispatch
-// this.$store.dispatch('search/start')

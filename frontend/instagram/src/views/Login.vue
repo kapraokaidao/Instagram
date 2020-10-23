@@ -11,13 +11,11 @@
         <div class="px-12">
           <v-text-field
             v-model="username"
-            :error-messages="usernameError"
             label="Username"
             required
           ></v-text-field>
           <v-text-field
             v-model="password"
-            :error-messages="passwordError"
             label="Password"
             required
           ></v-text-field>
@@ -43,7 +41,6 @@ import Component from "vue-class-component";
 import { Action,namespace } from "vuex-class";
 import { AuthActions, LoginCredentials } from "../types/auth";
 const authModule = namespace('auth')
-console.log(authModule)
 @Component
 export default class Login extends Vue {
   @authModule.Action(AuthActions.login) private login!: (
