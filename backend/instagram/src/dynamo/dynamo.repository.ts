@@ -36,6 +36,16 @@ export class DynamoRepository<T> {
     return this.tableName;
   }
 
+  async findAll(): Promise<T[]> {
+    const params = {
+      TableName: this.tableName
+    }
+    const result = await this.documentClient.scan(params).promise();
+    if (!result) return [];
+    const { Items } = result;
+    return Items; 
+  }
+
   async findById(value: string): Promise<T> {
     const queryParams = {
       TableName: this.tableName,

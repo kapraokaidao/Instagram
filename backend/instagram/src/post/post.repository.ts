@@ -15,6 +15,7 @@ export class PostRepository extends DynamoRepository<PostModel> {
   }
 
   async createPost(userId: string, image) {
+    const now = new Date()
     const post: PostModel = {
       _id: "",
       _uid: userId,
@@ -22,6 +23,8 @@ export class PostRepository extends DynamoRepository<PostModel> {
       imageUrl: "",
       likes: 0,
       likedBy: [],
+      createdDate: now.getTime(),
+      updatedDate: now.getTime(),
     };
     const newPost = await this.put(post);
     const postPath = `user_${userId}/posts/${newPost._id}.jpg`;

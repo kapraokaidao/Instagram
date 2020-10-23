@@ -5,13 +5,17 @@ export class PostModel {
 
   _uid: string; // user id , owner of post
 
-  caption: string;
+  caption: string; // changable
 
-  imageUrl: string;
+  imageUrl: string; // cannot be changed
 
   likes: number;
 
-  likedBy: string[]; // arr of user id who liked post
+  likedBy: string[]; // arr of user id who liked the post
+
+  createdDate: number;
+
+  updatedDate: number;
 }
 
 export class UpdateCaptionDto {
