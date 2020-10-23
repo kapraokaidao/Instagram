@@ -28,4 +28,16 @@ export class PostService {
   async findByUserId(uid: string): Promise<PostModel[]> {
     return this.postRepository.findByuserId(uid);
   }
+
+  async toggleLike(postId: string, uid: string) {
+    const post: PostModel = await this.postRepository.findById(postId);
+    let likeIds;
+    if(post.likedBy.includes(uid)) {
+      likeIds = post.likedBy.filter((id)=> id!= uid)
+    } else {
+      likeIds = post.likedBy
+      likeIds = likeIds.push(uid)
+    }
+    return this.postRepository.update(postId, { likeBy: likeIds})
+  }
 }

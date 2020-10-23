@@ -22,3 +22,8 @@ export class UpdateCaptionDto {
   @ApiProperty()
   caption: string;
 }
+
+export class PostDto {
+  @ApiProperty()
+  postId : string
+}
