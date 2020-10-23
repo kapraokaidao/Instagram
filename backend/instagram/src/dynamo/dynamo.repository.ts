@@ -88,7 +88,7 @@ export class DynamoRepository<T> {
     return newItem;
   }
 
-  async update(_id: string, data: T | any): Promise<boolean> {
+  async update(_id: string, data: T | any): Promise<void> {
     const params = {
       TableName: this.tableName,
       Key: {
@@ -99,7 +99,6 @@ export class DynamoRepository<T> {
       ReturnValues: "UPDATED_NEW",
     };
     await this.documentClient.update(params).promise();
-    return true;
   }
 
   generateUpdateExpression(dto): string {
