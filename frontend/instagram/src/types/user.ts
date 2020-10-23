@@ -6,7 +6,6 @@ export interface User {
   profilePath: string;
   bio: string;
 }
-
 export interface UserState extends RootState {
   isLoading: boolean;
   isSuccess: boolean;

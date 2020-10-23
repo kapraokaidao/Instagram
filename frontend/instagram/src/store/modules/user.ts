@@ -12,6 +12,7 @@ import {
   MutationTree,
   StoreOptions
 } from "vuex";
+
 import axios from "axios";
 import { AuthMutations } from "@/types/auth";
 import { RootState, rootState } from "@/store/modules/index";

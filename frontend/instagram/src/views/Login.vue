@@ -23,7 +23,7 @@
           ></v-text-field>
         </div>
         <div class="px-12 my-3">
-          <v-btn block class="secondary-btn" @click="login" to="/">
+          <v-btn block class="secondary-btn" @click="submit" to="/">
             Login
           </v-btn>
         </div>
@@ -40,15 +40,17 @@
 <script lang="ts">
 import { Vue } from "vue-property-decorator";
 import Component from "vue-class-component";
-import { Action } from "vuex-class";
+import { Action,namespace } from "vuex-class";
 import { AuthActions, LoginCredentials } from "../types/auth";
-
+const authModule = namespace('auth')
+console.log(authModule)
 @Component
 export default class Login extends Vue {
-  @Action(AuthActions.login) private login!: (
+  @authModule.Action(AuthActions.login) private login!: (
     credential: LoginCredentials
   ) => void;
   // data
+  
   private username = "";
   private password = "";
   private imageUrl = "../assets/cat-background.jpg";
