@@ -28,6 +28,9 @@ const getters: GetterTree<UserState, RootState> = {
 };
 
 const mutations: MutationTree<UserState> = {
+  [UserMutations.fetching]: (state, loading) => {
+    state.isLoading = loading;
+  },
   [UserMutations.setUser]: (state: UserState, user: User) => {
     state.user = user;
   }
@@ -35,12 +38,14 @@ const mutations: MutationTree<UserState> = {
 
 const actions: ActionTree<UserState, RootState> = {
   [UserActions.fetchUser]: async ({ commit, dispatch }) => {
+    commit(UserMutations.fetching, true);
     try {
       const { data } = await axios.get("/user/me");
       commit(UserMutations.setUser, data);
     } catch {
       await dispatch(AuthActions.logout, {}, { root: true });
     }
+    commit(UserMutations.fetching, false);
   },
   [UserActions.updateProfile]: async ({ commit }, data: Partial<User>) => {
     try {

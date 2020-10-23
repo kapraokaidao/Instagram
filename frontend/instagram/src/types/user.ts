@@ -3,7 +3,7 @@ import { RootState } from "@/store/modules";
 export interface User {
   _id: string;
   username: string;
-  profilePath: string;
+  imageUrl: string;
   bio: string;
 }
 export interface UserState extends RootState {

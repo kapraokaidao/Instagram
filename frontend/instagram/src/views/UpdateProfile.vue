@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { State, Action, namespace } from "vuex-class";
+import { namespace } from "vuex-class";
 import { User, UserActions } from "@/types/user";
 import router from "../router";
 const userModule = namespace("user");
