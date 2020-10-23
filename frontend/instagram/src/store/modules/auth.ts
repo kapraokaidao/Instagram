@@ -123,10 +123,23 @@ const actions: ActionTree<AuthState, any> = {
     }
     commit(AuthMutations.setLoading, false);
   },
+  [AuthActions.VerifyToken]: async ({ state,commit,dispatch}) => {
+    try {
+      if(state.token) {
+        await dispatch(AuthActions.setAxiosHeader)
+        const response = await axios.get<User>("user/me");
+        commit(AuthMutations.setUser, response.data)
+      } else {
+        dispatch(AuthActions.logout)
+      }
+    } catch(e){
+      dispatch(AuthActions.logout)
+    }
+  },
   [AuthActions.setAxiosHeader]: ({ state }) => {
     if (state.token) {
       axios.defaults.headers.common["Authorization"] = `Bearer ${state.token}`;
-    }
+    } 
   }
 };
 

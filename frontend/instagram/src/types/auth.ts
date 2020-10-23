@@ -32,11 +32,13 @@ export enum AuthMutations {
   setErrorData = "setErrorData"
 }
 
+
 export enum AuthActions {
   login = "login",
   logout = "logout",
   signUp = "signUp",
   redirect = "redirect",
   setAxiosHeader = "setAxiosHeader",
-  protectedRedirect = "protectedRedirect"
+  protectedRedirect = "protectedRedirect",
+  VerifyToken = "VerifyToken"
 }

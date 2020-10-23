@@ -48,7 +48,6 @@ import Component from "vue-class-component";
 import { Action, namespace } from "vuex-class";
 import { AuthActions, SignUpCredentials } from "../types/auth";
 const authModule = namespace('auth')
-console.log(authModule)
 
 @Component
 export default class Signup extends Vue {
