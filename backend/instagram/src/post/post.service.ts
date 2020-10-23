@@ -24,4 +24,8 @@ export class PostService {
     }
     return this.postRepository.update(postId, { updatedDate: new Date().getTime(), ...data });
   }
+
+  async findByUserId(uid: string): Promise<PostModel[]> {
+    return this.postRepository.findByuserId(uid);
+  }
 }

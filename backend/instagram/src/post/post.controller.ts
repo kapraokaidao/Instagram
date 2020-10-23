@@ -28,6 +28,16 @@ export class PostController {
     return paginate(posts, 1, posts.length);
   }
 
+  @Get("me")
+  async findOwnedPost(@User() user: UserDto): Promise<PostModel[]> {
+    return this.postService.findByUserId(user._id);
+  }
+
+  @Get("user/:uid")
+  async findByUserId(@Param("uid") userId: string): Promise<PostModel[]> {
+    return this.postService.findByUserId(userId);
+  }
+
   @Post()
   @ApiConsumes("multipart/form-data")
   @ApiBody({ type: FileUploadDto })

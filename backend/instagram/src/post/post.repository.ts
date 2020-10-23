@@ -32,4 +32,21 @@ export class PostRepository extends DynamoRepository<PostModel> {
     await this.update(newPost._id, { imageUrl: postImgUrl });
     return this.findById(newPost._id);
   }
+
+  async findByuserId(userId: string): Promise<PostModel[]> {
+    const params = {
+      tableName: this.tableName,
+      FilterExpression: "#uid = :uid",
+      ExpressionAttributeNames: {
+        "#uid": "_uid",
+      },
+      ExpressionAttributeValues: {
+        ":uid": userId,
+      },
+    };
+    const result = await this.documentClient.scan(params);
+    if (!result) return [];
+    const { Items } = result;
+    return Items;
+  }
 }
