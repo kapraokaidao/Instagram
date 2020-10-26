@@ -2,7 +2,7 @@
   <div class="plain-bg">
     <div class="margin-container pt-12">
       <v-row class="offset-2">
-        <h2>Welcome! {{ user.username }}</h2>
+        <h2>Welcome! {{ user ? user.username : "" }}</h2>
       </v-row>
       <v-row
         v-for="(image, i) in timelinePosts"
@@ -18,7 +18,7 @@
           <v-row class="home-img-info-profile pt-6" no-gutters>
             <v-col align-self="center" class="offset-1 col-1">
                 <v-avatar>
-                  <v-img v-bind:src="image.imageUrl" />
+                  <v-img v-bind:src="image.owner? image.owner.imageUrl : tempIcon" />
                 </v-avatar>
             </v-col>
             <v-col align-self="center" class="ml-3">
@@ -59,6 +59,8 @@ export default class Home extends Vue {
   @userModule.State("user") private user!: User;
   @postModule.State("timelinePosts") private timelinePosts!: Post[];
   @postModule.Action(PostActions.fetchTimelinePosts) private fetchTimelinePosts!: Function;
+
+  private tempIcon = "https://image.flaticon.com/icons/png/512/149/149071.png";
 
   mounted() {
     this.fetchTimelinePosts();
