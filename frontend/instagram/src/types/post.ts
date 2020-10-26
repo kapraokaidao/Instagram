@@ -17,10 +17,10 @@ export interface PostState {
 }
 
 export enum PostActions {
-  fetchPost = "fetchPost",
+  fetchTimelinePosts = "fetchTimelinePosts",
   createPost = "createPost"
 }
 
 export enum PostMutations {
-
+  setTimelinePosts = "setTimelinePosts",
 }

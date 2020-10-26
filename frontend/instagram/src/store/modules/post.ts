@@ -1,5 +1,5 @@
 import { ActionTree, GetterTree, Module, MutationTree } from "vuex";
-import { PostActions, PostState } from "@/types/post";
+import { PostActions, PostMutations, PostState } from "@/types/post";
 import axios from "axios";
 import { RootState, rootState } from "@/store/modules/index";
 import { cloneDeep } from "lodash";
@@ -14,6 +14,9 @@ const getters: GetterTree<PostState, RootState> = {
 };
 
 const mutations: MutationTree<PostState> = {
+  [PostMutations.setTimelinePosts]: (state, posts) => {
+    state.timelinePosts = posts
+  }
 };
 
 const actions: ActionTree<PostState, RootState> = {
@@ -24,6 +27,14 @@ const actions: ActionTree<PostState, RootState> = {
       await axios.put(`/post/${post._id}`, { caption });
     } catch (err) {
       console.log(err);
+    }
+  },
+  [PostActions.fetchTimelinePosts]: async ({ commit }) => {
+    try {
+      const { data } = await axios.get("/post/other");
+      commit(PostMutations.setTimelinePosts, data);
+    } catch (e) {
+      console.error(e);
     }
   }
 };

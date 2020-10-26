@@ -2,10 +2,10 @@
   <div class="plain-bg">
     <div class="margin-container pt-12">
       <v-row class="offset-2">
-        <h2>Welcome! {{ username }}</h2>
+        <h2>Welcome! {{ user.username }}</h2>
       </v-row>
       <v-row
-        v-for="(image, i) in posts"
+        v-for="(image, i) in timelinePosts"
         :key="i"
         class="home-img-container my-12"
         no-gutters
@@ -45,32 +45,25 @@
   </div>
 </template>
 
-<script>
-import axios from "axios";
-import dayjs from "dayjs";
+<script lang="ts">
+import { Vue, Component } from "vue-property-decorator";
+import { namespace } from "vuex-class";
+import { User } from "@/types/user";
+import { Post, PostActions } from "@/types/post";
 
-export default {
-  name: "Home",
-  data: () => ({
-    posts: [],
-    username: "",
-  }),
-  methods: {
-  },
-  async mounted() {
-    const data = (
-      await axios({
-        method: "get",
-        url: "/post"
-      })
-    ).data.data;
-    this.posts = data
+const userModule = namespace("user");
+const postModule = namespace("post");
 
-    await this.$store.dispatch("user/fetchUser");
-    const { username } = this.$store.state.user.user;
-    this.username = username;
+@Component
+export default class Home extends Vue {
+  @userModule.State("user") private user!: User;
+  @postModule.State("timelinePosts") private timelinePosts!: Post[];
+  @postModule.Action(PostActions.fetchTimelinePosts) private fetchTimelinePosts!: Function;
+
+  mounted() {
+    this.fetchTimelinePosts();
   }
-};
+}
 </script>
 
 <style lang="scss">
