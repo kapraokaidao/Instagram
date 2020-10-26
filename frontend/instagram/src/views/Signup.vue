@@ -59,7 +59,7 @@ export default class Signup extends Vue {
   private password1 = "";
   private password2 = "";
   private rules = {
-    required: (value: any) => !!value || "Required.",
+    required: (value: never) => !!value || "Required.",
     min: (v: { length: number }) => v.length >= 8 || "Min 8 characters",
     emailMatch: () => "The email and password you entered don't match"
   };

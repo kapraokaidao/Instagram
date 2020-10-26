@@ -17,10 +17,12 @@ import axios from "axios";
 import { AuthActions, AuthMutations } from "@/types/auth";
 import { RootState, rootState } from "@/store/modules/index";
 import { cloneDeep } from "lodash";
+import { Post } from "@/types/post";
 
 const state: UserState = {
   ...cloneDeep(rootState),
-  user: null
+  user: null,
+  posts: []
 };
 
 const getters: GetterTree<UserState, RootState> = {
@@ -33,6 +35,9 @@ const mutations: MutationTree<UserState> = {
   },
   [UserMutations.setUser]: (state: UserState, user: User) => {
     state.user = user;
+  },
+  [UserMutations.setPosts]: (state: UserState, posts: Post[] ) => {
+    state.posts = posts
   }
 };
 
@@ -59,6 +64,14 @@ const actions: ActionTree<UserState, RootState> = {
     try {
       await axios.post("/user/me/image", formData);
       await dispatch(UserActions.fetchUser);
+    } catch (e) {
+      console.error(e);
+    }
+  },
+  [UserActions.fetchPosts]: async ({ commit }) => {
+    try {
+      const { data } = await axios.get("/post/me");
+      commit(UserMutations.setPosts, data);
     } catch (e) {
       console.error(e);
     }

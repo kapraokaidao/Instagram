@@ -4,7 +4,7 @@
       <v-row class="py-6">
         <v-col align-self="center" class="col-1">
           <v-avatar height="7em" width="7em">
-            <v-img v-bind:src="imageUrl" />
+            <v-img v-bind:src="user.imageUrl" />
           </v-avatar>
         </v-col>
         <v-col
@@ -12,7 +12,7 @@
           class="ml-xs-16 col-sm-6 ml-sm-16 ml-md-12 col-md-4 col-xl-3 ml-xl-1"
         >
           <v-row class="px-3" no-gutters>
-            <h3>{{ username }}</h3>
+            <h3>{{ user.username }}</h3>
             <v-btn
               color="rgba(0,0,0,0.2)"
               @click="$router.push('/profile/update')"
@@ -26,7 +26,7 @@
           </v-row>
           <v-row class="px-3 col-12" no-gutters>
             <v-col class="col-4 pa-0" align-self="center"
-              ><h5 class="h5-first-child">{{ images.length }} Posts</h5></v-col
+              ><h5 class="h5-first-child">{{ userPosts.length }} Posts</h5></v-col
             >
             <!-- <v-col class="col-4 pa-0" align-self="center"
               ><h5>{{ user.followerCount }} Followers</h5></v-col
@@ -42,13 +42,13 @@
           align-self="center"
           class="offset-md-1 col-md-4 offset-sm-1  col-sm-10 offset-xl-2"
         >
-          <p>{{ bio }}</p>
+          <p>{{ user.bio }}</p>
         </v-col>
       </v-row>
       <v-row>
         <v-col
-          v-for="img in images"
-          :key="img.id"
+          v-for="img in userPosts"
+          :key="img._id"
           class="col-md-3 col-sm-4 col-xl-2 col-12"
         >
           <v-card @click="selectImage(img.imageUrl, img.caption)">
@@ -70,45 +70,31 @@
   </div>
 </template>
 
-<script>
-import axios from "axios";
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import { namespace } from "vuex-class";
+import { User, UserActions } from "@/types/user";
+import { Post } from "@/types/post";
 
-export default {
-  name: "Profile",
-  data: () => ({
-    images: [],
-    username: "",
-    imageUrl: "",
-    dialog: false,
-    selectedUrl: "",
-    selectedCaption: ""
-  }),
-  methods: {
-    getImgUrl(pic) {
-      return require("../assets/" + pic);
-    },
-    selectImage(imageUrl, caption) {
-      this.selectedUrl = imageUrl;
-      this.selectedCaption = caption;
-      this.dialog = true;
-    }
-  },
-  async mounted() {
-    const response = (
-      await axios({
-        method: "get",
-        url: "/post/me"
-      })
-    ).data;
-    this.images = response;
+const userModule = namespace("user");
+const postModule = namespace("post");
 
-    await this.$store.dispatch("user/fetchUser");
-    const { username, imageUrl, bio } = this.$store.state.user.user;
-    this.username = username;
-    this.imageUrl = imageUrl;
-    this.bio = bio;
+@Component
+export default class Profile extends Vue {
+  @userModule.State("user") private user!: User;
+  @userModule.State("posts") private userPosts!: Post[];
+  @userModule.Action(UserActions.fetchPosts) private fetchPosts!: Function;
+
+  private dialog = false;
+  private selectedUrl = "";
+  private selectedCaption = "";
+
+  selectImage(imageUrl: string, caption: string) {
+    this.selectedUrl = imageUrl;
+    this.selectedCaption = caption;
+    this.dialog = true;
   }
-};
+}
 </script>
 
 <style lang="scss">
