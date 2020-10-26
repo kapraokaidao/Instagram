@@ -3,7 +3,7 @@ import { FileInterceptor } from "@nestjs/platform-express";
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { User } from "src/decorators/user.decorator";
 import { FileUploadDto } from "src/model/image.model";
-import { OtherPostDto, PostModel, UpdateCaptionDto } from "src/model/post.model";
+import { PostModel, UpdateCaptionDto } from "src/model/post.model";
 import { UserDto } from "src/model/user.model";
 import { S3Service } from "src/s3/s3.service";
 import { paginate } from "src/utils/pagination.utils";

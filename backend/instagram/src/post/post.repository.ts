@@ -29,7 +29,7 @@ export class PostRepository extends DynamoRepository<PostModel> {
       updatedDate: now.getTime(),
     };
     const newPost = await this.put(post);
-    const postPath = `user_${userId}/posts/${newPost._id}.jpg`;
+    const postPath = `user_${user._id}/posts/${newPost._id}.jpg`;
     const postImgUrl = await this.s3Service.uploadImage(image, postPath);
     await this.update(newPost._id, { imageUrl: postImgUrl });
     return this.findById(newPost._id);
