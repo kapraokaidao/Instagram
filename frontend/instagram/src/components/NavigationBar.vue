@@ -1,6 +1,6 @@
 <template>
   <v-toolbar flat color="#FAFAFA">
-    <v-btn icon depressed class="ml-16" color="#FFFFFF" to="/home"
+    <v-btn icon depressed class="ml-16" color="#FFFFFF" to="/"
       ><v-img class="nav-img" src="../assets/logo.png"
     /></v-btn>
     <router-link class="nav-link ml-16" to="/profile">My Profile</router-link>

@@ -52,9 +52,10 @@ const actions: ActionTree<UserState, RootState> = {
     }
     commit(UserMutations.fetching, false);
   },
-  [UserActions.updateProfile]: async ({ commit }, data: Partial<User>) => {
+  [UserActions.updateProfile]: async ({ commit, dispatch }, data: Partial<User>) => {
     try {
       await axios.put(`/user/me`, data);
+      await dispatch(UserActions.fetchUser);
     } catch (e) {
       console.error(e);
     }
@@ -63,7 +64,6 @@ const actions: ActionTree<UserState, RootState> = {
     console.log(formData);
     try {
       await axios.post("/user/me/image", formData);
-      await dispatch(UserActions.fetchUser);
     } catch (e) {
       console.error(e);
     }
