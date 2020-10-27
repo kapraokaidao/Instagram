@@ -18,6 +18,10 @@ export class PostService {
     return this.postRepository.createPost(user, image);
   }
 
+  async deletePost(postId: string): Promise<PostModel> {
+    return this.postRepository.deletePost(postId)
+  }
+
   async updateCaption(postId: string, ownerId: string, data: UpdateCaptionDto): Promise<void> {
     const post = await this.postRepository.findById(postId);
     if (post._uid !== ownerId) {

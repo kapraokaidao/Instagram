@@ -101,6 +101,17 @@ export class DynamoRepository<T> {
     await this.documentClient.update(params).promise();
   }
 
+  async delete(_id: string): Promise<T> {
+    const params = {
+      TableName: this.tableName,
+      Key: {
+        _id,
+      },
+      ReturnValues: "ALL_OLD"
+    };
+    return this.documentClient.delete(params)
+  }
+
   generateUpdateExpression(dto): string {
     const keys = Object.keys(dto).filter(key => key !== "_id");
     const expr = keys.map(key => ` ${key} = :${key}`);
