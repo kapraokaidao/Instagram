@@ -94,6 +94,10 @@ export default class Profile extends Vue {
     this.selectedCaption = caption;
     this.dialog = true;
   }
+
+  async mounted() {
+    await this.fetchPosts();
+  }
 }
 </script>
 
