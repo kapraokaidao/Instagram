@@ -26,8 +26,8 @@ const getters: GetterTree<AuthState, RootState> = {
 };
 
 const mutations: MutationTree<AuthState> = {
-  [AuthMutations.setToken]: (state, access_token: string ) => {
-    state.token = access_token;
+  [AuthMutations.setToken]: (state, accessToken: string ) => {
+    state.token = accessToken;
   },
   [AuthMutations.setLoading]: (state, payload: boolean) => {
     state.isLoading = payload;
@@ -74,7 +74,8 @@ const actions: ActionTree<AuthState, any> = {
     }
     commit(AuthMutations.setLoading, false);
   },
-  [AuthActions.logout]: async ({ commit }) => {
+  [AuthActions.logout]: ({ commit }) => {
+    // alert("")
     commit(AuthMutations.setToken, null);
     alert("logout");
     router.push({ name: "Login" });

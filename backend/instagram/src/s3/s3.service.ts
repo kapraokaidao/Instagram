@@ -30,4 +30,13 @@ export class S3Service {
     const { Location } = await this.s3.upload(params).promise();
     return Location;
   }
+
+  async deleteImage(path) {
+    this.initS3();
+    const params =  {
+      Bucket: "ig-iamge",
+      Key: path
+    }
+    await this.s3.deleteObject(params).promise();
+  }
 }

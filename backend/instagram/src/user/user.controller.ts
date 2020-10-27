@@ -42,4 +42,8 @@ export class UserController {
     const imageUrl = await this.s3Service.uploadImage(image, path);
     return this.userService.updateImageUrl(user._id, imageUrl);
   }
+
+  // async deletePost(@User() user: UserDto) {
+    
+  // }
 }

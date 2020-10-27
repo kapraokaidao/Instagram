@@ -50,7 +50,6 @@ import { Vue, Component } from "vue-property-decorator";
 import { namespace } from "vuex-class";
 import { User } from "@/types/user";
 import { Post, PostActions } from "@/types/post";
-
 const userModule = namespace("user");
 const postModule = namespace("post");
 
