@@ -23,9 +23,7 @@
             </v-col>
             <v-col align-self="center" class="ml-3">
               <v-row no-gutters>
-                <p
-                  class="secondary-link text-decoration-none"
-                  >{{ image._uid }}</p>
+                <p class="secondary-link text-decoration-none">{{ image.owner? image.owner.username: '' }}</p>
               </v-row>
               <v-row no-gutters>
                 <!-- <h5>{{dayjs.unix(image.updatedDate).fromNow()}}</h5> -->
