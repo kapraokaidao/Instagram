@@ -10,5 +10,6 @@ import { PostRepository } from "./post.repository";
     PostRepository,
     { provide: "tableName", useValue: "ig-post" },
   ],
+  exports:[PostService]
 })
 export class PostModule {}
