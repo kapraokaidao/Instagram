@@ -67,7 +67,6 @@ const actions: ActionTree<AuthState, any> = {
       commit(AuthMutations.setToken, response.data.access_token);
       commit(AuthMutations.setError, false);
       await dispatch(AuthActions.setAxiosHeader);
-      router.push({ name: "Profile" });
     } catch (error) {
       commit(AuthMutations.setError, true);
       commit(AuthMutations.setErrorData, error.response.message);
@@ -75,9 +74,7 @@ const actions: ActionTree<AuthState, any> = {
     commit(AuthMutations.setLoading, false);
   },
   [AuthActions.logout]: ({ commit }) => {
-    // alert("")
     commit(AuthMutations.setToken, null);
-    alert("logout");
     router.push({ name: "Login" });
   },
   [AuthActions.redirect]: async ({ commit }) => {
