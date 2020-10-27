@@ -75,7 +75,7 @@ const actions: ActionTree<AuthState, any> = {
   },
   [AuthActions.logout]: ({ commit }) => {
     commit(AuthMutations.setToken, null);
-    router.push({ name: "Login" });
+    if (router.currentRoute.name !== "Login") router.push({ name: "Login" });
   },
   [AuthActions.redirect]: async ({ commit }) => {
     const response = await axios.get<User>("/user/me");
