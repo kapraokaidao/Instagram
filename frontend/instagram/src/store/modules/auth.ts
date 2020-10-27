@@ -26,8 +26,8 @@ const getters: GetterTree<AuthState, RootState> = {
 };
 
 const mutations: MutationTree<AuthState> = {
-  [AuthMutations.setToken]: (state, payload: { access_token: string }) => {
-    state.token = payload.access_token;
+  [AuthMutations.setToken]: (state, access_token: string ) => {
+    state.token = access_token;
   },
   [AuthMutations.setLoading]: (state, payload: boolean) => {
     state.isLoading = payload;
@@ -49,9 +49,8 @@ const actions: ActionTree<AuthState, any> = {
     commit(AuthMutations.setLoading, true);
     try {
       const response = await axios.post("/auth/login", payload);
-      commit(AuthMutations.setToken, response.data);
+      commit(AuthMutations.setToken, response.data.access_token);
       await dispatch(AuthActions.setAxiosHeader);
-      router.push({ name: "Profile" });
     } catch (error) {
       commit(AuthMutations.setError, true);
       commit(AuthMutations.setErrorData, error.response.message);
@@ -64,8 +63,8 @@ const actions: ActionTree<AuthState, any> = {
   ) => {
     commit(AuthMutations.setLoading, true);
     try {
-      const response = await axios.post<string>("/auth/register", payload);
-      commit(AuthMutations.setToken, response.data);
+      const response = await axios.post("/auth/register", payload);
+      commit(AuthMutations.setToken, response.data.access_token);
       commit(AuthMutations.setError, false);
       await dispatch(AuthActions.setAxiosHeader);
       router.push({ name: "Profile" });
