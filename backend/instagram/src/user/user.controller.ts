@@ -43,7 +43,8 @@ export class UserController {
     return this.userService.updateImageUrl(user._id, imageUrl);
   }
 
-  // async deletePost(@User() user: UserDto) {
-    
-  // }
+  @Get(":pid")
+  async deletePost(@User() user: UserDto, @Param('pid') postId: string ) {
+    this.s3Service.deleteImage()
+  }
 }
