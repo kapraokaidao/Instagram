@@ -18,8 +18,13 @@ export class PostService {
     return this.postRepository.createPost(user, image);
   }
 
-  async deletePost(postId: string): Promise<PostModel> {
-    return this.postRepository.deletePost(postId)
+  async deletePost(postId: string, userId: string) {
+    const post: PostModel = await this.postRepository.findById(postId);
+    if (post._uid == userId) {
+      await this.postRepository.delete(postId);
+    } else {
+      throw new ForbiddenException("You are not the post owner");
+    }
   }
 
   async updateCaption(postId: string, ownerId: string, data: UpdateCaptionDto): Promise<void> {
@@ -30,24 +35,29 @@ export class PostService {
     this.postRepository.update(postId, { updatedDate: new Date().getTime(), ...data });
   }
 
+  async exists(pid: string): Promise<boolean> {
+    const post = await this.postRepository.findById(pid);
+    return !!post;
+  }
+
   async findByUserId(uid: string): Promise<PostModel[]> {
     const posts = await this.postRepository.findByuserId(uid);
     return posts.sort((a, b) => b.updatedDate - a.updatedDate);
   }
 
-  async findOtherUserId(uid: string, limit: number) : Promise<PostModel[]> {
+  async findOtherUserId(uid: string, limit: number): Promise<PostModel[]> {
     return this.postRepository.findOtheruserId(uid, limit);
   }
 
   async toggleLike(postId: string, uid: string) {
     const post: PostModel = await this.postRepository.findById(postId);
     let likeIds: string[];
-    if(post.likedBy.includes(uid)) {
-      likeIds = post.likedBy.filter((id)=> id!= uid)
+    if (post.likedBy.includes(uid)) {
+      likeIds = post.likedBy.filter(id => id != uid);
     } else {
-      likeIds = post.likedBy
-      likeIds.push(uid)
+      likeIds = post.likedBy;
+      likeIds.push(uid);
     }
-    return this.postRepository.update(postId, {likes: likeIds.length, likedBy: likeIds})
+    return this.postRepository.update(postId, { likes: likeIds.length, likedBy: likeIds });
   }
 }

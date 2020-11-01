@@ -33,10 +33,10 @@ export class S3Service {
 
   async deleteImage(path) {
     this.initS3();
-    const params =  {
-      Bucket: "ig-iamge",
-      Key: path
-    }
+    const params = {
+      Bucket: "ig-image",
+      Key: path,
+    };
     await this.s3.deleteObject(params).promise();
   }
 }
