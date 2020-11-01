@@ -1,9 +1,10 @@
 import { RootState } from "@/store/modules";
+import { Post } from "@/types/post";
 
 export interface User {
   _id: string;
   username: string;
-  profilePath: string;
+  imageUrl: string;
   bio: string;
 }
 export interface UserState extends RootState {
@@ -11,6 +12,7 @@ export interface UserState extends RootState {
   isSuccess: boolean;
   isError: boolean;
   user: User | null;
+  posts: Post[];
 }
 
 export enum UserGetters {
@@ -21,7 +23,8 @@ export enum UserMutations {
   fetching = "fetching",
   success = "success",
   error = "error",
-  setUser = "setUser"
+  setUser = "setUser",
+  setPosts = "setPosts"
 }
 
 export enum UserActions {
@@ -29,5 +32,7 @@ export enum UserActions {
   setFetching = "setFetching",
   setSuccess = "setSuccess",
   setError = "setError",
-  updateProfile = "updateProfile"
+  updateProfile = "updateProfile",
+  uploadImage = "uploadImage",
+  fetchPosts = "fetchPosts"
 }

@@ -68,7 +68,7 @@ router.beforeEach((to, from, next) => {
   const state = store.state as any;
   const isAuthenticated = !!state.auth.token;
   if (to.name === "Signup" || to.name === "Login") {
-    if (isAuthenticated) next({ name: "Profile" });
+    if (isAuthenticated) next({ name: "Home" });
     else next();
   } else {
     if (isAuthenticated) next();

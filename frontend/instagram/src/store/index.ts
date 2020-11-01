@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import auth from "@/store/modules/auth";
 import user from "@/store/modules/user";
+import post from "@/store/modules/post";
 import { AuthState } from "../types/auth";
 import VuexPersistence from "vuex-persist";
 
@@ -15,7 +16,8 @@ const vuexLocal = new VuexPersistence<AuthState>({
 const store = new Vuex.Store({
   modules: {
     auth,
-    user
+    user,
+    post
   },
   plugins: [vuexLocal.plugin]
 });

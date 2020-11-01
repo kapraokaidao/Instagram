@@ -1,19 +1,25 @@
 <template>
   <v-toolbar flat color="#FAFAFA">
-    <v-btn icon depressed class="ml-16" color="#FFFFFF" to="/home"
-      ><v-img class="nav-img" src="../assets/logo.png"
-    /></v-btn>
+    <v-btn icon depressed class="ml-16" color="#FFFFFF" to="/"
+      ><v-img class="nav-img" src="../assets/logo.png"/></v-btn>
     <router-link class="nav-link ml-16" to="/profile">My Profile</router-link>
     <router-link class="nav-link ml-12" to="/upload">Upload photo</router-link>
     <v-spacer></v-spacer>
-    <router-link class="nav-link mr-16" to="/">Sign Out</router-link>
+    <v-btn class="nav-link mr-16" @click="logout">Sign Out</v-btn>
   </v-toolbar>
 </template>
 
-<script>
-module.exports = {
-  name: "NavigationBar"
-};
+<script lang="ts">
+import { namespace } from "vuex-class";
+import { AuthActions } from "../types/auth";
+import { Vue, Component } from "vue-property-decorator";
+
+const authModule = namespace("auth");
+
+@Component
+export default class NavigationBar extends Vue {
+  @authModule.Action(AuthActions.logout) logout!: ()=>void;
+}
 </script>
 
 <style scoped lang="scss">

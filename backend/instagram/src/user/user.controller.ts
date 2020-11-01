@@ -6,12 +6,14 @@ import { GetMultipleDto, UpdateBioDto, UserDto } from "../model/user.model";
 import { FileUploadDto } from "../model/image.model";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { S3Service } from "src/s3/s3.service";
+import { PostService } from "src/post/post.service";
+import { PostModel } from "src/model/post.model";
 
 @ApiBearerAuth()
 @ApiTags("User")
 @Controller("user")
 export class UserController {
-  constructor(private readonly userService: UserService, private readonly s3Service: S3Service) {}
+  constructor(private readonly userService: UserService, private readonly s3Service: S3Service, private readonly postService: PostService) {}
 
   @Get("me")
   me(@User() user: UserDto) {
@@ -41,5 +43,12 @@ export class UserController {
     const path = `user_${user._id}/profile/profile_image.jpg`;
     const imageUrl = await this.s3Service.uploadImage(image, path);
     return this.userService.updateImageUrl(user._id, imageUrl);
+  }
+
+  @Get(":pid")
+  async deletePost(@User() user: UserDto, @Param('pid') postId: string ) {
+    // delete Post
+    const deletedPost: PostModel = await this.postService.deletePost(postId)
+    await this.s3Service.deleteImage(`user_${user._id}/posts/${deletedPost._id}.jpg`)
   }
 }
