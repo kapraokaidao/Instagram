@@ -12,10 +12,12 @@
           </v-col>
           <v-col class="home-img-info">
             <v-row class="home-img-info-profile pt-6" no-gutters>
-              <v-col align-self="center" class="offset-1">
+              <v-col cols="auto" align-self="center" class="offset-1">
                 <v-avatar>
                   <v-img
-                    v-bind:src="image.owner.imageUrl ? image.owner.imageUrl : tempIcon"
+                    v-bind:src="
+                      image.owner.imageUrl ? image.owner.imageUrl : tempIcon
+                    "
                   />
                 </v-avatar>
               </v-col>
@@ -38,15 +40,64 @@
           </v-col>
         </v-row>
         <div>
-          <div><button style="color:red;font-size:30px;" @click="likeButton(image._id)">❤</button> <span style="font-size: 24px;">{{image.likes}}</span></div>
-        </div>
-        <div>
-          <input placeholder="comment" v-model="inputComment[image._id]" /> <button style="font-size:26;" @click="comment(image._id)">submit</button>
-        </div>
-        <div v-for="(comment, i) in comments[image._id]" :key="i">
           <div>
-            {{comment.message}}
+            <button
+              style="color:red;font-size:30px;"
+              @click="likeButton(image._id)"
+            >
+              ❤
+            </button>
+            <span style="font-size: 24px;">{{ image.likes }}</span>
           </div>
+        </div>
+
+        <div style="background: #e4e4e4; padding: 10px;">
+          <div
+            style="border-bottom:1px solid; padding-bottom: 10px; margin-bottom: 20px; display: flex;"
+          >
+            <input
+              placeholder="comment"
+              v-model="inputComment[image._id]"
+              style="border: 1px solid; padding: 5px; width: 100%; margin-right: 10px;"
+            />
+            <button
+              style="font-size:26; display:block; margin-left:auto; border: 1px solid; padding: 5px;"
+              @click="comment(image._id)"
+            >
+              submit
+            </button>
+          </div>
+
+<div style="max-height: 300px; overflow-y: scroll;">
+          <div v-for="(comment, i) in image.comments" :key="`cc${i}`">
+            <div class="home-img-info-profile mb-6" style="display: flex;">
+              <div align-self="center">
+                <v-avatar size="40">
+                  <v-img
+                    v-bind:src="
+                      comment.user.imageUrl ? comment.user.imageUrl : tempIcon
+                    "
+                  />
+                </v-avatar>
+              </div>
+              <div align-self="center" class="ml-3">
+                <v-row no-gutters>
+                  <p
+                    class="secondary-link text-decoration-none"
+                    style="line-height: 0.5;"
+                  >
+                    {{ comment.user ? comment.user.username : "" }}
+                  </p>
+                </v-row>
+                <v-row no-gutters>
+                  {{ comment.message }}
+                </v-row>
+              </div>
+            </div>
+          </div>
+</div>
+
+
         </div>
       </div>
     </div>
@@ -54,7 +105,7 @@
 </template>
 
 <script lang="ts">
-import axios from 'axios';
+import axios from "axios";
 import { Vue, Component } from "vue-property-decorator";
 import { namespace } from "vuex-class";
 import { User } from "@/types/user";
@@ -70,22 +121,19 @@ export default class Home extends Vue {
   private fetchTimelinePosts!: Function;
 
   tempIcon = "https://image.flaticon.com/icons/png/512/149/149071.png";
-  inputComment: any = {}
-  comments: any = {}
+  inputComment: any = {};
 
-  async likeButton(id: string){
+  async likeButton(id: string) {
     const { data } = await axios.post(`/post/${id}/like`);
     this.fetchTimelinePosts();
   }
 
-  async comment(id: string){
-    const {data} = await axios.post(`/comment`, {
+  async comment(id: string) {
+    const { data } = await axios.post(`/comment`, {
       _pid: id,
       message: this.inputComment[id]
-    })
-    const {data: comment} = await axios.get(`/post/${id}/comment`)
-    console.log('saasd', comment)
-    this.comments[id] = comment
+    });
+    this.fetchTimelinePosts();
   }
 
   mounted() {
