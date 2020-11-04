@@ -48,7 +48,8 @@ export class PostController {
 
   @Get("me")
   async findOwnedPost(@User() user: UserDto): Promise<PostModel[]> {
-    return this.postService.findByUserId(user._id);
+    const posts: PostModel[] = await this.postService.findByUserId(user._id);
+    return this.populatePosts(posts)
   }
 
   @Get("other")
@@ -59,6 +60,10 @@ export class PostController {
       posts = await this.postService.findOtherUserId(user._id, parseInt(limit));
     }
     posts = await this.postService.findOtherUserId(user._id, 1000);
+    return this.populatePosts(posts)
+  }
+
+  async populatePosts(posts: PostModel[]) : Promise<PostModel[]> {
     return Promise.all( 
       posts.map( async (post: PostModel) => {
         let comments : CommentModel[] = await this.commentService.findComment(post._id)
@@ -66,7 +71,6 @@ export class PostController {
         return post
       })
     )
-    
   }
 
   @Get("user/:uid")
