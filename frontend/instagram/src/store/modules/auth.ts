@@ -51,6 +51,7 @@ const actions: ActionTree<AuthState, any> = {
       const response = await axios.post("/auth/login", payload);
       commit(AuthMutations.setToken, response.data.access_token);
       await dispatch(AuthActions.setAxiosHeader);
+      router.push({ name: "Home" })
     } catch (error) {
       commit(AuthMutations.setError, true);
       commit(AuthMutations.setErrorData, error.response.message);
