@@ -3,9 +3,10 @@ import { CommentController } from "./comment.controller";
 import { CommentService } from "./comment.service";
 import { CommentRepository } from "./comment.repository";
 import { PostModule } from "src/post/post.module";
+import { UserModule } from "src/user/user.module";
 
 @Module({
-  imports: [forwardRef(() => PostModule)],
+  imports: [forwardRef(() => PostModule), forwardRef(() => UserModule)],
   controllers: [CommentController],
   providers: [
     CommentRepository,

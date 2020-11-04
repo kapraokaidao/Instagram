@@ -2,16 +2,24 @@ import { ForbiddenException, Injectable } from "@nestjs/common";
 import { PostModel, UpdateCaptionDto } from "src/model/post.model";
 import { S3Service } from "src/s3/s3.service";
 import { CommentRepository } from "./comment.repository";
-import { UserDto } from "../model/user.model";
+import { UserDto, UserModel } from "../model/user.model";
 import { CommentModel } from "src/model/comment.model";
+import { User } from "src/decorators/user.decorator";
+import { UserService } from "src/user/user.service";
 
 @Injectable()
 export class CommentService {
-  constructor(private readonly commentRepository: CommentRepository, private readonly s3Service: S3Service) {}
+  constructor(private readonly commentRepository: CommentRepository, private readonly s3Service: S3Service, private readonly userService: UserService) {}
 
   async findComment(postId: string): Promise<CommentModel[]> {
-    const comments = await this.commentRepository.findCommentByPost(postId);
+    let comments: CommentModel[] = await this.commentRepository.findCommentByPost(postId);
+    comments = await Promise.all ( comments.map( async (comment: CommentModel) => {
+      const user : UserModel = await this.userService.findById(comment.userId)
+      comment["user"] = user
+      return comment
+    }) )
     return comments.sort((a, b) => b.updatedDate - a.updatedDate);
+
   }
 
   async deleteComment(commentId: string) {

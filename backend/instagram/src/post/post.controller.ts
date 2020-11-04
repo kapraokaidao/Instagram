@@ -54,10 +54,19 @@ export class PostController {
   @Get("other")
   @ApiQuery({ name: "limit", schema: { type: "integer" }, required: true })
   async findOtherPost(@User() user: UserDto, @Query("limit") limit: string): Promise<PostModel[]> {
+    let posts: PostModel[]
     if (limit) {
-      return this.postService.findOtherUserId(user._id, parseInt(limit));
+      posts = await this.postService.findOtherUserId(user._id, parseInt(limit));
     }
-    return this.postService.findOtherUserId(user._id, 1000);
+    posts = await this.postService.findOtherUserId(user._id, 1000);
+    return Promise.all( 
+      posts.map( async (post: PostModel) => {
+        let comments : CommentModel[] = await this.commentService.findComment(post._id)
+        post["comments"] = comments
+        return post
+      })
+    )
+    
   }
 
   @Get("user/:uid")
@@ -90,7 +99,7 @@ export class PostController {
   }
 
   @Post(":id/like")
-  toggleLike(@User() user: UserDto, @Param("id") postId: string) {
+  toggleLike(@User() user: UserDto, @Param("id") postId: string): Promise<string> {
     return this.postService.toggleLike(postId, user._id);
   }
 

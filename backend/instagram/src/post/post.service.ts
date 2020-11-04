@@ -3,6 +3,7 @@ import { PostModel, UpdateCaptionDto } from "src/model/post.model";
 import { S3Service } from "src/s3/s3.service";
 import { PostRepository } from "./post.repository";
 import { UserDto } from "../model/user.model";
+import { type } from "os";
 
 @Injectable()
 export class PostService {
@@ -52,12 +53,16 @@ export class PostService {
   async toggleLike(postId: string, uid: string) {
     const post: PostModel = await this.postRepository.findById(postId);
     let likeIds: string[];
+    let typeOfAction = ""
     if (post.likedBy.includes(uid)) {
       likeIds = post.likedBy.filter(id => id != uid);
+      typeOfAction = "unlike"
     } else {
       likeIds = post.likedBy;
       likeIds.push(uid);
+      typeOfAction = "like"
     }
-    return this.postRepository.update(postId, { likes: likeIds.length, likedBy: likeIds });
+    await this.postRepository.update(postId, { likes: likeIds.length, likedBy: likeIds });
+    return typeOfAction
   }
 }

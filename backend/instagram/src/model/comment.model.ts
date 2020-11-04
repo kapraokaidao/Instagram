@@ -1,4 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { UserModel } from "./user.model";
 
 export class CommentModel {
   _id: string; // comment id
@@ -7,7 +8,7 @@ export class CommentModel {
   _pid: string; // user id , owner of comment
 
   // @ApiProperty({ type: "string", default: "" })
-  // userId: string;
+  userId: string;
 
   @ApiProperty({ type: "string", default: "" })
   message: string;
