@@ -49,28 +49,28 @@ export class PostController {
   @Get("me")
   async findOwnedPost(@User() user: UserDto): Promise<PostModel[]> {
     const posts: PostModel[] = await this.postService.findByUserId(user._id);
-    return this.populatePosts(posts)
+    return this.populatePosts(posts);
   }
 
   @Get("other")
   @ApiQuery({ name: "limit", schema: { type: "integer" }, required: true })
   async findOtherPost(@User() user: UserDto, @Query("limit") limit: string): Promise<PostModel[]> {
-    let posts: PostModel[]
+    let posts: PostModel[];
     if (limit) {
       posts = await this.postService.findOtherUserId(user._id, parseInt(limit));
     }
     posts = await this.postService.findOtherUserId(user._id, 1000);
-    return this.populatePosts(posts)
+    return this.populatePosts(posts);
   }
 
-  async populatePosts(posts: PostModel[]) : Promise<PostModel[]> {
-    return Promise.all( 
-      posts.map( async (post: PostModel) => {
-        let comments : CommentModel[] = await this.commentService.findComment(post._id)
-        post["comments"] = comments
-        return post
+  async populatePosts(posts: PostModel[]): Promise<PostModel[]> {
+    return Promise.all(
+      posts.map(async (post: PostModel) => {
+        let comments: CommentModel[] = await this.commentService.findComment(post._id);
+        post["comments"] = comments;
+        return post;
       })
-    )
+    );
   }
 
   @Get("user/:uid")
@@ -103,7 +103,7 @@ export class PostController {
   }
 
   @Post(":id/like")
-  toggleLike(@User() user: UserDto, @Param("id") postId: string): Promise<string> {
+  toggleLike(@User() user: UserDto, @Param("id") postId: string): Promise<number> {
     return this.postService.toggleLike(postId, user._id);
   }
 

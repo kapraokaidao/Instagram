@@ -68,36 +68,34 @@
             </button>
           </div>
 
-<div style="max-height: 300px; overflow-y: scroll;">
-          <div v-for="(comment, i) in image.comments" :key="`cc${i}`">
-            <div class="home-img-info-profile mb-6" style="display: flex;">
-              <div align-self="center">
-                <v-avatar size="40">
-                  <v-img
-                    v-bind:src="
-                      comment.user.imageUrl ? comment.user.imageUrl : tempIcon
-                    "
-                  />
-                </v-avatar>
-              </div>
-              <div align-self="center" class="ml-3">
-                <v-row no-gutters>
-                  <p
-                    class="secondary-link text-decoration-none"
-                    style="line-height: 0.5;"
-                  >
-                    {{ comment.user ? comment.user.username : "" }}
-                  </p>
-                </v-row>
-                <v-row no-gutters>
-                  {{ comment.message }}
-                </v-row>
+          <div style="max-height: 300px; overflow-y: scroll;">
+            <div v-for="(comment, i) in image.comments" :key="`cc${i}`">
+              <div class="home-img-info-profile mb-6" style="display: flex;">
+                <div align-self="center">
+                  <v-avatar size="40">
+                    <v-img
+                      v-bind:src="
+                        comment.user.imageUrl ? comment.user.imageUrl : tempIcon
+                      "
+                    />
+                  </v-avatar>
+                </div>
+                <div align-self="center" class="ml-3">
+                  <v-row no-gutters>
+                    <p
+                      class="secondary-link text-decoration-none"
+                      style="line-height: 0.5;"
+                    >
+                      {{ comment.user ? comment.user.username : "" }}
+                    </p>
+                  </v-row>
+                  <v-row no-gutters>
+                    {{ comment.message }}
+                  </v-row>
+                </div>
               </div>
             </div>
           </div>
-</div>
-
-
         </div>
       </div>
     </div>
