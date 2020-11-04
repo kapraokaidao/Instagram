@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar flat color="#FAFAFA">
+  <v-toolbar flat color="#FAFAFA" v-if="isLogin">
     <v-btn icon depressed color="#FFFFFF" to="/"
       ><v-img class="nav-img" src="../assets/logo.png"/></v-btn>
     <router-link class="nav-link ml-4" to="/profile">My Profile</router-link>
@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { namespace } from "vuex-class";
-import { AuthActions } from "../types/auth";
+import { AuthActions, AuthGetters } from "../types/auth";
 import { Vue, Component } from "vue-property-decorator";
 
 const authModule = namespace("auth");
@@ -19,6 +19,7 @@ const authModule = namespace("auth");
 @Component
 export default class NavigationBar extends Vue {
   @authModule.Action(AuthActions.logout) logout!: ()=>void;
+  @authModule.Getter(AuthGetters.isLogin) isLogin!: boolean;
 }
 </script>
 
