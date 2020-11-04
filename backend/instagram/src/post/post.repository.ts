@@ -7,7 +7,6 @@ import { UserDto } from "src/model/user.model";
 
 @Injectable()
 export class PostRepository extends DynamoRepository<PostModel> {
-
   constructor(
     configService: ConfigService,
     @Inject("tableName") tableName: string,
@@ -36,9 +35,9 @@ export class PostRepository extends DynamoRepository<PostModel> {
     return this.findById(newPost._id);
   }
 
-  deletePost(postId: string): Promise<PostModel> {
+  deletePost(postId: string): Promise<void> {
     // throw new Error("Delete Post Method not implemented.");
-    return this.delete(postId)
+    return this.delete(postId);
   }
 
   async findByuserId(userId: string): Promise<PostModel[]> {
@@ -68,7 +67,7 @@ export class PostRepository extends DynamoRepository<PostModel> {
       ExpressionAttributeValues: {
         ":uid": userId,
       },
-      Limit : limit,
+      Limit: limit,
     };
     const result = await this.documentClient.scan(params).promise();
     if (!result) return [];
