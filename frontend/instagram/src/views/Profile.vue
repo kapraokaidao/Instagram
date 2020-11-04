@@ -38,7 +38,7 @@
           :key="img._id"
           class="col-md-3 col-sm-4 col-xl-2 col-12"
         >
-          <v-card @click="selectImage(img._id, img.imageUrl, img.caption)">
+          <v-card @click="selectImage(img._id, img.imageUrl, img.caption, img.createdDate)">
             <v-img aspect-ratio="1" :src="img.imageUrl"></v-img>
           </v-card>
         </v-col>
@@ -51,6 +51,7 @@
           <v-img :src="selectedUrl"></v-img>
         </v-card-title>
         <v-card-text>
+          <h5>{{dayjsx()}}</h5>
           <p style="font-size: 20px;">{{ selectedCaption }}</p>
           <button style="font-size: 16px;" @click="deleteImage">Delete ❌</button>
         </v-card-text>
@@ -65,6 +66,9 @@ import { Component, Vue } from "vue-property-decorator";
 import { namespace } from "vuex-class";
 import { User, UserActions } from "@/types/user";
 import { Post } from "@/types/post";
+import * as dayjs from 'dayjs';
+import * as relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
 
 const userModule = namespace("user");
 const postModule = namespace("post");
@@ -79,12 +83,18 @@ export default class Profile extends Vue {
   private selectedUrl = "";
   private selectedCaption = "";
   private selectedId = "";
+  private selectedCreatedDate = ""
 
-  selectImage(id: string, imageUrl: string, caption: string) {
+  dayjsx(){
+    return dayjs(this.selectedCreatedDate).fromNow()
+  }
+
+  selectImage(id: string, imageUrl: string, caption: string, selectedCreatedDate: string) {
     this.selectedUrl = imageUrl;
     this.selectedCaption = caption;
     this.selectedId = id;
     this.dialog = true;
+    this.selectedCreatedDate = selectedCreatedDate;
   }
 
   async deleteImage(){

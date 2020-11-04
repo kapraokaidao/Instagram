@@ -28,7 +28,7 @@
                   </p>
                 </v-row>
                 <v-row no-gutters>
-                  <!-- <h5>{{dayjs.unix(image.updatedDate).fromNow()}}</h5> -->
+                   <h5>{{dayjsx(image.updatedDate)}}</h5>
                 </v-row>
               </v-col>
             </v-row>
@@ -47,7 +47,7 @@
             >
               ❤
             </button>
-            <span style="font-size: 24px;">{{ image.likes }}</span>
+            <span style="font-size: 24px;"> {{ image.likes }}</span>
           </div>
         </div>
 
@@ -108,6 +108,10 @@ import { Vue, Component } from "vue-property-decorator";
 import { namespace } from "vuex-class";
 import { User } from "@/types/user";
 import { Post, PostActions } from "@/types/post";
+import * as dayjs from 'dayjs';
+import * as relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
+
 const userModule = namespace("user");
 const postModule = namespace("post");
 
@@ -120,6 +124,10 @@ export default class Home extends Vue {
 
   tempIcon = "https://image.flaticon.com/icons/png/512/149/149071.png";
   inputComment: any = {};
+
+  dayjsx(datetime){
+    return dayjs(datetime).fromNow()
+  }
 
   async likeButton(id: string) {
     const { data } = await axios.post(`/post/${id}/like`);
