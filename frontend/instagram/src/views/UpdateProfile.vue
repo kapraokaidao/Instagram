@@ -43,13 +43,14 @@ export default class UpdateProfile extends Vue {
     this.file = file;
   }
 
-  submit() {
+  async submit() {
     if (this.file) {
       const formData = new FormData();
       formData.append("image", this.file);
       this.uploadImage(formData);
     }
     this.updateProfile({ bio: this.editBio });
+    await this.fetchUser();
     router.push("/profile");
   }
 }

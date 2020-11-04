@@ -7,7 +7,7 @@ export class CommentModel {
   _pid: string; // user id , owner of comment
 
   // @ApiProperty({ type: "string", default: "" })
-  // userId: string;
+  userId: string;
 
   @ApiProperty({ type: "string", default: "" })
   message: string;

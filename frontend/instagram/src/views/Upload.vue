@@ -37,9 +37,8 @@
 import router from "../router";
 import { Component, Vue } from "vue-property-decorator";
 import { namespace } from "vuex-class";
-import { User } from "@/types/user";
+import { User, UserActions } from "@/types/user";
 import { PostActions } from "@/types/post";
-
 const userModule = namespace("user");
 const postModule = namespace("post");
 
@@ -47,6 +46,7 @@ const postModule = namespace("post");
 export default class Upload extends Vue {
   @userModule.State("user") private user!: User;
   @postModule.Action(PostActions.createPost) createPost!: Function;
+  @userModule.Action(UserActions.fetchPosts) private fetchPosts!: Function;
 
   private file: any = null;
   private editCaption = "";
@@ -65,6 +65,7 @@ export default class Upload extends Vue {
       caption: this.editCaption
     };
     await this.createPost(payload);
+    await this.fetchPosts();
     router.push("/profile");
   }
 }
