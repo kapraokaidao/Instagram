@@ -28,7 +28,7 @@
                   </p>
                 </v-row>
                 <v-row no-gutters>
-                   <h5>{{dayjsx(image.updatedDate)}}</h5>
+                  <h5>{{ dayjsx(image.updatedDate) }}</h5>
                 </v-row>
               </v-col>
             </v-row>
@@ -108,8 +108,8 @@ import { Vue, Component } from "vue-property-decorator";
 import { namespace } from "vuex-class";
 import { User } from "@/types/user";
 import { Post, PostActions } from "@/types/post";
-import * as dayjs from 'dayjs';
-import * as relativeTime from 'dayjs/plugin/relativeTime';
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
 const userModule = namespace("user");
@@ -125,8 +125,8 @@ export default class Home extends Vue {
   tempIcon = "https://image.flaticon.com/icons/png/512/149/149071.png";
   inputComment: any = {};
 
-  dayjsx(datetime){
-    return dayjs(datetime).fromNow()
+  dayjsx(unix: number) {
+    return dayjs(unix).fromNow();
   }
 
   async likeButton(id: string) {

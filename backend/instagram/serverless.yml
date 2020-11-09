@@ -10,15 +10,9 @@ provider:
   tracing:
     apiGateway: true
   runtime: nodejs12.x
-  stage: ${opt:stage, 'dev'}
+  stage: ${opt:stage, 'production'}
   region: ap-southeast-1
-  # iamRoleStatements:
-  #   - ${file(iam/UserTableIAM.yml):UserTableIAM}
   environment: ${file(secrets.yml)}
-
-# resources:
-#   Resources:
-#     UserTable: ${file(resources/UserTable.yml):UserTable}
 
 functions:
   main:
