@@ -54,6 +54,7 @@ const actions: ActionTree<AuthState, any> = {
 			commit(AuthMutations.setToken, response.data.access_token);
 			commit(AuthMutations.setError, false);
 			await dispatch(AuthActions.setAxiosHeader);
+			location.reload();
 		} catch (error) {
 			commit(AuthMutations.setError, true);
 			commit(AuthMutations.setErrorData, error.response.message);
