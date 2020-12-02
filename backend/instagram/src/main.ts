@@ -23,7 +23,7 @@ async function bootstrap() {
   await app.listen(3000);
 }
 
-// bootstrap();
+bootstrap();
 
 export async function createApp(expressApp: Express): Promise<INestApplication> {
   const app = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
