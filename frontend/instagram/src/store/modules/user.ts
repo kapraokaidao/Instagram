@@ -45,6 +45,7 @@ const actions: ActionTree<UserState, RootState> = {
 		try {
 			await axios.put(`/user/me`, data);
 			await dispatch(UserActions.fetchUser);
+			location.reload();
 		} catch (e) {
 			console.error(e);
 		}
